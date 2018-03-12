@@ -1,11 +1,36 @@
-[中文](https://github.com/leejaen/react-lz-editor/blob/master/README.cn.md)
+# Entropy react-lz-editor guide
+
+A Entropy-customized react rich-text editor based off of [react-lz-editor:](https://leejaen.github.io/react-lz-editor/index.html).
+
+## How to contribute
+```
+// clone this repo and go to the repo folder.
+
+yarn && yarn dev
+
+// All the source code is under /src. 
+// Create a new branch and open with your favorite editor.
+git checkout -b [dev_name]/[feature_branch]
+
+// After you finish your development, you open a PR. Get approval and then merge into master.
+// The admin run the following command to publish it (IT IS A MUST! 
+// Otherwise, our front-end repo wouldn't be able to access the code.)
+git checkout master && yarn publish
+
+// Enjoy coding!
+```
+[![npm license](https://img.shields.io/npm/l/awesome-badges.svg)](https://www.npmjs.org/package/awesome-badges)
 
 # react-lz-editor
 
 An open source react rich-text editor ( mordern react editor includes media support such as texts, images, videos, audios, links etc. ), development based on Draft-Js and Ant-design, good support html, markdown, draft-raw mode. It's supports multiple languages well and welcome you add your language supports.
 
-## languages
-:pray: English, Chinese, Russian from [@borisblack](https://github.com/borisblack), Japanese from [@sibaservice](https://github.com/sibaservice)
+## Language Contributors
+
+[![Li Zhen](https://avatars3.githubusercontent.com/u/1638970?s=50&v=4)](https://github.com/leejaen) | [![Li Zhen](https://avatars3.githubusercontent.com/u/1638970?s=50&v=4)](https://github.com/leejaen) | [![Boris Chernysh]()](https://github.com/borisblack) | [![SibaService.inc](https://avatars1.githubusercontent.com/u/1687663?s=50&v=4)](https://github.com/sibaservice)
+---|---|---|---
+[Li Zhen](https://github.com/leejaen) | [Li Zhen](https://github.com/leejaen) | [Boris Chernysh](https://github.com/borisblack) | [SibaService.inc](https://github.com/sibaservice)
+English | Chinese(S. & T.) | Russian | Japannese
 
 ## Live demo
 
