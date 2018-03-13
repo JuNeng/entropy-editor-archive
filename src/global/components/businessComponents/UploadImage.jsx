@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import {Upload, Button, Icon, message,Input} from 'antd';
-import {PRO_URL, PRO_QINIU, PRO_COMMON} from '../../supports/publicDatas';
+import React, { Component } from "react";
+import { Upload, Button, Icon, message, Input } from "antd";
+import { PRO_URL, PRO_QINIU, PRO_COMMON } from "../../supports/publicDatas";
 import findIndex from "lodash/findIndex";
 import isEqual from "lodash/isEqual";
 import cloneDeep from "lodash/cloneDeep";
@@ -19,41 +19,46 @@ class UploadImage extends Component {
     this.state = {
       isLoad: false,
       qiniu: {
-        token: this.props.uploadConfig&&Object.keys(this.props.uploadConfig).length
-                ?PRO_QINIU.checkQiniu.returnToken(this.props.uploadConfig)
-                :null
+        token:
+          this.props.uploadConfig && Object.keys(this.props.uploadConfig).length
+            ? PRO_QINIU.checkQiniu.returnToken(this.props.uploadConfig)
+            : null
       },
       files: [],
       upReceiverFun: null,
-      inputVideoUrl:"",
-      inputVideoHelp:"",
-    }
+      inputVideoUrl: "",
+      inputVideoHelp: ""
+    };
 
-    this.getInputVideo=this.getInputVideo.bind(this);
-    this.changeInputVideo=this.changeInputVideo.bind(this);
+    this.getInputVideo = this.getInputVideo.bind(this);
+    this.changeInputVideo = this.changeInputVideo.bind(this);
   }
 
-  changeInputVideo(e){
-    let value=e.target.value;
+  changeInputVideo(e) {
+    let value = e.target.value;
     // console.log("changeInputVideo",value);
-    this.setState({inputVideoUrl:value});
+    this.setState({ inputVideoUrl: value });
   }
 
-  getInputVideo(e){
-    let value=e.target.value;
-    if (PRO_COMMON.Validation.isWebFileURL(value,this.props.fileType)) {
+  getInputVideo(e) {
+    let value = e.target.value;
+    if (PRO_COMMON.Validation.isWebFileURL(value, this.props.fileType)) {
       this.state.inputVideoUrl = "";
       this.state.inputVideoHelp = "";
       this.forceUpdate();
-      setTimeout(()=>{
-        this.state.files.push({url:value,name:value,status:"done",uid:"uid_"+PRO_COMMON.String.RndNum(20)});
+      setTimeout(() => {
+        this.state.files.push({
+          url: value,
+          name: value,
+          status: "done",
+          uid: "uid_" + PRO_COMMON.String.RndNum(20)
+        });
         // this.getVideoObject();
-        setTimeout(()=>{
+        setTimeout(() => {
           this.props.cbReceiver(this.state.files);
-        },100);
-      },100);
-    }
-    else {
+        }, 100);
+      }, 100);
+    } else {
       this.state.inputVideoHelp = this.props.lang.invalidUrl;
       this.forceUpdate();
     }
@@ -64,19 +69,27 @@ class UploadImage extends Component {
     if (!!this.props.fileList) {
       this.props.fileList.copyWithin(list);
     }
-      // console.log("componentDidMount list:", list);
+    // console.log("componentDidMount list:", list);
     if (!!list) {
-      this.setState({files: list});
+      this.setState({ files: list });
     }
   }
 
   beforeUpload(file) {
-    let isFormat = PRO_COMMON.Array.inArray(PRO_QINIU.supportMime[this.props.fileType], file.type);
+    let isFormat = PRO_COMMON.Array.inArray(
+      PRO_QINIU.supportMime[this.props.fileType],
+      file.type
+    );
     if (!isFormat) {
-      message.error(this.props.lang.supportMimeMsg+' File Mimetype: ' + PRO_QINIU.supportMime[this.props.fileType].join(", "), 10);
+      message.error(
+        this.props.lang.supportMimeMsg +
+          " File Mimetype: " +
+          PRO_QINIU.supportMime[this.props.fileType].join(", "),
+        10
+      );
       return false;
     }
-    if (!this.state.qiniu.token&&!uploadConfig) {
+    if (!this.state.qiniu.token && !uploadConfig) {
       let token = PRO_QINIU.checkQiniu.returnToken(this.props.uploadConfig);
       this.state.qiniu.token = token;
     }
@@ -88,15 +101,22 @@ class UploadImage extends Component {
     clearTimeout(this.state.upReceiverFun);
     let fileList = info.fileList;
 
-    fileList = fileList.filter((f) => (!f.length));
+    fileList = fileList.filter(f => !f.length);
     let url = "";
     if (this.props.fileType == "image") {
-      url = PRO_URL.QINIU_DOMAIN_IMG_URL||this.props.uploadConfig.QINIU_DOMAIN_IMG_URL;
-    } else if (this.props.fileType == "video" || this.props.fileType == "audio") {
-      url = PRO_URL.QINIU_DOMAIN_VIDEO_URL||this.props.uploadConfig.QINIU_DOMAIN_VIDEO_URL;
+      url =
+        PRO_URL.QINIU_DOMAIN_IMG_URL ||
+        this.props.uploadConfig.QINIU_DOMAIN_IMG_URL;
+    } else if (
+      this.props.fileType == "video" ||
+      this.props.fileType == "audio"
+    ) {
+      url =
+        PRO_URL.QINIU_DOMAIN_VIDEO_URL ||
+        this.props.uploadConfig.QINIU_DOMAIN_VIDEO_URL;
     }
     //读取远程路径并显示链接
-    fileList = fileList.map((file) => {
+    fileList = fileList.map(file => {
       if (file.response) {
         // 组件会将 file.url 作为链接进行展示
         file.url = url + "/" + file.response.key;
@@ -109,9 +129,12 @@ class UploadImage extends Component {
     let _this = this;
     //按照服务器返回信息筛选成功上传的文件
     // let cloneList=cloneDeep(_this.state.files);
-    fileList = fileList.filter((file) => {
+    fileList = fileList.filter(file => {
       //根据多选选项更新添加内容
-      let hasNoExistCurrFileInUploadedList=!~findIndex(_this.state.files,item=>item.name===file.name)
+      let hasNoExistCurrFileInUploadedList = !~findIndex(
+        _this.state.files,
+        item => item.name === file.name
+      );
       if (hasNoExistCurrFileInUploadedList) {
         if (!!_this.props.isMultiple == true) {
           _this.state.files.push(file);
@@ -121,19 +144,32 @@ class UploadImage extends Component {
       }
       if (!!file.response) {
         //上传列表数量的限制，只显示最近上传的限制个数，旧的会被新的顶掉
-        if (!!_this.props.limit && _this.state.files.length > _this.props.limit) {
-          message.info(_this.props.lang.limitCountTip.replace("$limit$",_this.props.limit), 5);
-          PRO_COMMON.Array.removeByIndex(_this.state.files, 0)
+        if (
+          !!_this.props.limit &&
+          _this.state.files.length > _this.props.limit
+        ) {
+          message.info(
+            _this.props.lang.limitCountTip.replace(
+              "$limit$",
+              _this.props.limit
+            ),
+            5
+          );
+          PRO_COMMON.Array.removeByIndex(_this.state.files, 0);
         }
       }
-      return !!file.response||(!!file.url&&file.status=="done")||file.status=="uploading";
+      return (
+        !!file.response ||
+        (!!file.url && file.status == "done") ||
+        file.status == "uploading"
+      );
     });
-    fileList=uniqBy(fileList,"name");
+    fileList = uniqBy(fileList, "name");
     // console.log("upload _this.state.files",_this.state.files);
     // console.log("upload fileList before if",fileList);
     if (!!fileList && fileList.length != 0) {
-      console.log("upload set files as fileList",fileList);
-      this.setState({files: fileList});
+      console.log("upload set files as fileList", fileList);
+      this.setState({ files: fileList });
     }
     _this.forceUpdate();
     this.state.upReceiverFun = setTimeout(() => {
@@ -143,21 +179,24 @@ class UploadImage extends Component {
         return false;
       }
       this.props.cbReceiver(this.state.files);
-
     }, 1000);
   }
   supportFileType(props, propName, componentName) {
-    componentName = componentName || 'ANONYMOUS';
+    componentName = componentName || "ANONYMOUS";
     if (props[propName]) {
       let value = props[propName];
-      if (typeof value === 'string') {
+      if (typeof value === "string") {
         var isInSupport = !!PRO_QINIU.supportMime[value];
         return isInSupport
           ? null
-          : new Error(propName + ' in ' + componentName + this.props.lang.invalidType);
+          : new Error(
+              propName + " in " + componentName + this.props.lang.invalidType
+            );
       }
     } else {
-      throw new Error(propName + ' in ' + componentName + this.props.lang.invalidFileType);
+      throw new Error(
+        propName + " in " + componentName + this.props.lang.invalidFileType
+      );
       return false;
     }
     // assume all ok
@@ -167,87 +206,109 @@ class UploadImage extends Component {
   componentWillReceiveProps(nextProps) {
     clearTimeout(this.state.upReceiverFun);
     if (nextProps.uploadProps) {
-
       this.state.upReceiverFun = setTimeout(() => {
         //限制频繁调用组件制定的cbReceiver
-        if (!!nextProps.uploadProps.fileList && nextProps.uploadProps.fileList.length == 0) {
+        if (
+          !!nextProps.uploadProps.fileList &&
+          nextProps.uploadProps.fileList.length == 0
+        ) {
           return false;
         }
         this.props.cbReceiver(nextProps.uploadProps.fileList);
-
       }, 1000);
       return false;
     }
     if (isEqual(nextProps.fileList, this.state.files)) {
       return false;
     }
-    if(nextProps.isOpenModel){
+    if (nextProps.isOpenModel) {
       // this.setState({
       //   files:[]
       // })
-      this.state.files=[];
+      this.state.files = [];
       this.forceUpdate();
-
     }
     // console.log("componentWillReceiveProps 图片有更新：", nextProps.fileList, this.state.files);
     let list = [];
     if (this.state.files.length) {
       list = this.state.files.copyWithin(0);
-    }else {
+    } else {
       list = cloneDeep(nextProps.fileList);
     }
     if (!!list) {
       PRO_COMMON.obj.refsKeyTo(list, "uid");
-      this.setState({files: list});
+      this.setState({ files: list });
     }
   }
 
   render() {
-    let {isMultiple, isShowUploadList, uploadProps} = this.props,that=this;
-    uploadProps = uploadProps&&Object.keys(uploadProps).length>0
-    ?uploadProps
-    :({
-      action: PRO_URL.QINIU_URL||this.props.uploadConfig.QINIU_URL,
-      onChange: this.onChange.bind(this),
-      listType: 'picture',
-      fileList: this.state.files,
-      data: (file)=>{//支持自定义保存文件名、扩展名支持
-          let token =that.state.qiniu.token,key="";
-          if (!token) {
-            token = PRO_QINIU.checkQiniu.returnToken(this.props.uploadConfig);
-          }
-          key = PRO_COMMON.String.RndNum(20)+"."+PRO_COMMON.String.GetFileExtensionName(file.name)[0];
-          if (this.props.uploadConfig.QINIU_KEY_PREFIX) {
-            key = this.props.uploadConfig.QINIU_KEY_PREFIX + '/' + key
-          }
-          return {token,key}
-        },
-      multiple: isMultiple || false,
-      beforeUpload: this.beforeUpload.bind(this),
-      showUploadList: isShowUploadList !== undefined ? isShowUploadList : true
-    });
+    debugger;
+    let { isMultiple, isShowUploadList, uploadProps } = this.props,
+      that = this;
+
+    uploadProps =
+      uploadProps && Object.keys(uploadProps).length > 0
+        ? uploadProps
+        : {
+            action: PRO_URL.QINIU_URL || this.props.uploadConfig.QINIU_URL,
+            onChange: this.onChange.bind(this),
+            listType: "picture",
+            fileList: this.state.files,
+            data: file => {
+              //支持自定义保存文件名、扩展名支持
+              let token = that.state.qiniu.token,
+                key = "";
+              if (!token) {
+                token = PRO_QINIU.checkQiniu.returnToken(
+                  this.props.uploadConfig
+                );
+              }
+              key =
+                PRO_COMMON.String.RndNum(20) +
+                "." +
+                PRO_COMMON.String.GetFileExtensionName(file.name)[0];
+              if (this.props.uploadConfig.QINIU_KEY_PREFIX) {
+                key = this.props.uploadConfig.QINIU_KEY_PREFIX + "/" + key;
+              }
+              return { token, key };
+            },
+            multiple: isMultiple || false,
+            beforeUpload: this.beforeUpload.bind(this),
+            showUploadList:
+              isShowUploadList !== undefined ? isShowUploadList : true
+          };
     // console.log("uploadProps",uploadProps);
 
     return (
       <div>
         <Upload {...uploadProps}>
           <Button>
-            <Icon type="upload"/>
+            <Icon type="upload" />
             {this.props.lang.btnUpload}
           </Button>
         </Upload>
 
-        <div style={{margin:"10px 0 0"}}>
+        <div style={{ margin: "10px 0 0" }}>
           <Input
-          placeholder={this.props.lang.manuallyUploadTip}
-          value={this.state.inputVideoUrl}
-          onChange={this.changeInputVideo}
-          onPressEnter={this.getInputVideo}/>
-          <span style={{color:'red'}}>{this.state.inputVideoHelp}&nbsp;</span>
+            placeholder={this.props.lang.manuallyUploadTip}
+            value={this.state.inputVideoUrl}
+            onChange={this.changeInputVideo}
+            onPressEnter={this.getInputVideo}
+          />
+          <span style={{ color: "red" }}>
+            {this.state.inputVideoHelp}&nbsp;
+          </span>
         </div>
-        <span>{this.props.lang.limitAndTypeTip.replace("$limit$",this.props.limit).replace("$type$",PRO_QINIU.supportMime[this.props.fileType].join(", "))}</span>
+        <span>
+          {this.props.lang.limitAndTypeTip
+            .replace("$limit$", this.props.limit)
+            .replace(
+              "$type$",
+              PRO_QINIU.supportMime[this.props.fileType].join(", ")
+            )}
+        </span>
       </div>
-    )
+    );
   }
 }
 

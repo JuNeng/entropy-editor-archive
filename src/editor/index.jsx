@@ -1,11 +1,11 @@
 /**
  * Created by lizhen on 4/26/2016.
+ * Modified by Lian Liu on 3/12/2018
  */
-import "./components.css";
-import "../global/supports/resources/system.css";
-import "antd/dist/antd.css";
 import React, { Component } from "react";
 import ReactDom from "react-dom";
+import "./styles/index.less";
+
 import {
   AtomicBlockUtils,
   Editor,
@@ -75,7 +75,7 @@ class EditorConcist extends React.Component {
     super(props);
 
     this.state = {
-      openFullTest: "",
+      openFullText: "",
       showSourceEditor: "",
       showURLInput: false,
       urlValue: "",
@@ -196,7 +196,8 @@ class EditorConcist extends React.Component {
     language = language || "en";
     this.setState({
       language,
-      openFullTest: lang[language].fullScreen,
+      // openFullText: lang[language].fullScreen,
+      openFullText: <Icon type="arrows-alt" />,
       showSourceEditor: lang[language].sourceCode
     });
 
@@ -333,24 +334,19 @@ class EditorConcist extends React.Component {
   _openFull(e) {
     e.preventDefault();
     let ele = document.querySelector(".RichEditor-root");
-    // let affix=document.querySelector("#text-editor-affix"),affixToolBar=document.querySelector("#text-editor-affix>div");
+
     if (ele.classList.contains("openFullAll")) {
       ele.className = ele.className.replace("openFullAll", "");
-      // affix.style="";
-      // affixToolBar.className="";
-      // affixToolBar.style=""
       this.setState({
-        openFullTest: lang[this.state.language].fullScreen
+        // openFullText: lang[this.state.language].fullScreen
+        openFullText: <Icon type="arrows-alt" />
       });
     } else {
       ele.className += " openFullAll";
-      setTimeout(() => {
-        // affix.style="width: "+affix.offsetWidth+"px; height: 0; margin-bottom: 70px;";
-        // affixToolBar.className="ant-affix";
-        // affixToolBar.style="position: fixed; top: 0; left: 0; width: "+affix.offsetWidth+"px;margin: 0 15px 15px;"
-      }, 500);
+
       this.setState({
-        openFullTest: lang[this.state.language].quitFullScreen
+        // openFullText: lang[this.state.language].quitFullScreen
+        openFullText: <Icon type="shrink" />
       });
     }
   }
@@ -763,7 +759,7 @@ class EditorConcist extends React.Component {
         content={this.state.HTML}
         id="text-editor-container"
       >
-        <div>
+        <div className="RichEditor-controls-container">
           {this.state.showMarkdownSource == false &&
             this.props.undoRedo && (
               <UndoRedo
@@ -785,14 +781,6 @@ class EditorConcist extends React.Component {
                 lang={lang[this.state.language]}
               />
             )}
-          {this.state.showMarkdownSource == false &&
-            this.props.blockStyle && (
-              <BlockStyleControls
-                editorState={editorState}
-                onToggle={this.toggleBlockType}
-                lang={lang[this.state.language]}
-              />
-            )}
           {this.props.alignment &&
             this.props.convertFormat !== "markdown" && (
               <AlignmentControls
@@ -809,6 +797,14 @@ class EditorConcist extends React.Component {
                 lang={lang[this.state.language]}
               />
             )}
+          {this.state.showMarkdownSource == false &&
+            this.props.blockStyle && (
+              <BlockStyleControls
+                editorState={editorState}
+                onToggle={this.toggleBlockType}
+                lang={lang[this.state.language]}
+              />
+            )}
           {this.props.color &&
             this.props.convertFormat !== "markdown" && (
               <ColorControls
@@ -817,7 +813,8 @@ class EditorConcist extends React.Component {
                 lang={lang[this.state.language]}
               />
             )}
-          {this.state.showMarkdownSource == false &&
+          {/* Lian: We don't need it by now. */}
+          {/* {this.state.showMarkdownSource == false &&
             this.props.image && (
               <ImgStyleControls
                 uploadConfig={this.props.uploadConfig}
@@ -826,7 +823,7 @@ class EditorConcist extends React.Component {
                 lang={lang[this.state.language]}
                 uploadProps={this.props.uploadProps}
               />
-            )}
+            )} */}
           {this.state.showMarkdownSource == false &&
             this.props.video && (
               <VideoStyleControls
@@ -853,14 +850,15 @@ class EditorConcist extends React.Component {
                 lang={lang[this.state.language]}
               />
             )}
-          {this.state.showMarkdownSource == false &&
+          {/* Lian: We don't need it by now. */}
+          {/* {this.state.showMarkdownSource == false &&
             this.props.urls && (
               <CloseUrl
                 editorState={editorState}
                 onToggle={this.removeLink}
                 lang={lang[this.state.language]}
               />
-            )}
+            )} */}
           {this.state.showMarkdownSource == false &&
             this.props.autoSave && (
               <AutoSaveControls
@@ -868,19 +866,19 @@ class EditorConcist extends React.Component {
                 lang={lang[this.state.language]}
               />
             )}
-          {this.props.fullScreen && (
-            <OpenFull
-              editorState={editorState}
-              onToggle={this.openFull}
-              coverTitle={this.state.openFullTest}
-              lang={lang[this.state.language]}
-            />
-          )}
           {this.props.convertFormat == "markdown" && (
             <SourceEditor
               editorState={editorState}
               onToggle={this.toggleSource}
               coverTitle={this.state.showSourceEditor}
+              lang={lang[this.state.language]}
+            />
+          )}
+          {this.props.fullScreen && (
+            <OpenFull
+              editorState={editorState}
+              onToggle={this.openFull}
+              coverTitle={this.state.openFullText}
               lang={lang[this.state.language]}
             />
           )}
@@ -1043,17 +1041,19 @@ const Media = props => {
 //    }),
 //   convertFormat: React.PropTypes.oneOf(['html', 'markdown', 'raw']),
 // }
+// Lian:
+// Set our customized defaultProps
 EditorConcist.defaultProps = {
-  undoRedo: true,
-  removeStyle: true,
-  pasteNoStyle: true,
+  undoRedo: false,
+  removeStyle: false,
+  pasteNoStyle: false,
   blockStyle: true,
-  alignment: true,
+  alignment: false,
   inlineStyle: true,
-  color: true,
+  color: false,
   image: true,
-  video: true,
-  audio: true,
+  video: false,
+  audio: false,
   urls: true,
   autoSave: true,
   fullScreen: true,

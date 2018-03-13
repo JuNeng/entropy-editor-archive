@@ -6,7 +6,7 @@ import { Base64 } from "js-base64";
 import md5 from "md5";
 import findIndex from "lodash/findIndex";
 import uniqBy from "lodash/uniqBy";
-import LzEditor from "./entropy_editor/index";
+import LzEditor from "./editor/index";
 
 class Test extends React.Component {
   constructor(props) {
@@ -184,24 +184,24 @@ class Test extends React.Component {
     return (
       <div>
         <div>Editor demo 0: Entropy version</div>
+        <div
+          style={{
+            width: "640px",
+            margin: "auto"
+          }}
+        >
+          <LzEditor active={true} cbReceiver={this.receiveHtml} />
+        </div>
+        <br />
+        <br />
+        <div>Editor demo 1 (use default html format ):</div>
         <LzEditor
           active={true}
-          importContent={null}
+          importContent={this.state.htmlContent}
           cbReceiver={this.receiveHtml}
-          undoRedo={false}
-          blockStyle={false}
-          color={false}
-          video={false}
-          audio={false}
-          alignment={false}
-          removeStyle={false}
-          pasteNoStyle={false}
+          uploadProps={uploadProps}
         />
-        {/* <div>Editor demo 1 (use default html format ):
-        </div>
-        <LzEditor active={true} importContent={this.state.htmlContent} cbReceiver={this.receiveHtml} uploadProps={uploadProps}/>
-        <br/>
-        <br/>
+        {/*
         <div>Editor demo 2 (use markdown format ):
         </div>
         <LzEditor
