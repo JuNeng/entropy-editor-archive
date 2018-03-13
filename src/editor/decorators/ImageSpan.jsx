@@ -6,9 +6,6 @@ import ReactDom from "react-dom";
 import { Entity, EditorState } from "draft-js";
 import { message } from "antd";
 
-// $FlowIssue - Flow doesn't understand CSS Modules
-import styles from "./decoratorStyle.css";
-
 export default class ImageSpan extends Component {
   constructor(props: Props) {
     super(props);

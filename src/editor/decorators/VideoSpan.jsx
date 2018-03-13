@@ -4,9 +4,6 @@
 import React, { Component } from "react";
 import { Entity } from "draft-js";
 
-// $FlowIssue - Flow doesn't understand CSS Modules
-import styles from "./decoratorStyle.css";
-
 export default class VideoSpan extends Component {
   constructor(props: Props) {
     super(props);
