@@ -10,11 +10,10 @@
     "typecheck": "flow",
     "precommit": "lint-staged",
     "dev":
-      "webpack-dev-server --devtool eval --progress --colors --hot --content-base build && lessc src/global/supports/resources/system.less src/global/supports/resources/system.css",
+      "webpack-dev-server --devtool eval --progress --colors --hot --content-base build",
     "release":
       "webpack -p --progress --colors --config webpack.release.config.js",
-    "publish":
-      "babel -d publish/ src/ --no-comments && lessc src/global/supports/resources/system.less publish/global/supports/resources/system.css"
+    "publish": "babel -d publish/ src/ --no-comments"
   },
   "lint-staged": {
     "*.{js,jsx,json,less,css,md}": ["prettier --write", "git add"]
