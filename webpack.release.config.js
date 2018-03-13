@@ -4,12 +4,12 @@ var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 module.exports = {
   resolve: {
     root: [
-      path.resolve("./global/components"),
-      path.resolve("./global/supports")
+      path.resolve("./src/global/components"),
+      path.resolve("./src/global/supports")
     ],
     extensions: ["", ".js", ".jsx"]
   },
-  entry: [path.resolve("", "test.jsx")],
+  entry: [path.resolve("", "src/test.jsx")],
   output: {
     path: __dirname + "/release",
     filename: "bundle.js",

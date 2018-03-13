@@ -3,16 +3,16 @@ var webpack = require("webpack");
 module.exports = {
   resolve: {
     root: [
-      path.resolve("./global/components"),
-      path.resolve("./global/supports")
+      path.resolve("./src/global/components"),
+      path.resolve("./src/global/supports")
     ],
     extensions: ["", ".js", ".jsx"]
   },
   entry: [
     "webpack/hot/dev-server",
     "webpack-dev-server/client?http://localhost:8081",
-    // path.resolve('', 'main.js')//for publish
-    path.resolve("", "test.jsx") //for text
+    // path.resolve('', 'src/main.js')//for publish
+    path.resolve("", "src/test.jsx") //for text
   ],
   output: {
     path: path.resolve("", "build"),
