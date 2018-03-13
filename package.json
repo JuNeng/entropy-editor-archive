@@ -17,7 +17,7 @@
       "babel -d publish/ src/ --no-comments && lessc src/global/supports/resources/system.less publish/global/supports/resources/system.css"
   },
   "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
+    "*.{js,jsx,json,less,css,md}": ["prettier --write", "git add"]
   },
   "repository": {
     "type": "git",
