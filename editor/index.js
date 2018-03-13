@@ -202,15 +202,8 @@ class EditorConcist extends React.Component {
     });
 
     let content = this.props.importContent;
-    // const decorator = new CompositeDecorator([
-    //   LinkDecorator,
-    //   ImageDecorator
-    // ]);
     const contentState = stateFromHTML(content);
-    //  console.log("componentDidMount content",content);
-    //  console.log("componentDidMount contentState",JSON.stringify(contentState));
-    // let values = EditorState.createWithContent(contentState, decorator);
-    // this.state.editorState = values;
+
     this.state.autoSaveFun = setInterval(() => {
       // Automaticly save text to draft-box every minute.
       //每分钟自动保存草稿一次
