@@ -192,7 +192,7 @@ class Test extends React.Component {
         >
           <LzEditor active={true} cbReceiver={this.receiveHtml} />
         </div>
-        <br />
+        {/* <br />
         <br />
         <div>Editor demo 1 (use default html format ):</div>
         <LzEditor
@@ -200,7 +200,7 @@ class Test extends React.Component {
           importContent={this.state.htmlContent}
           cbReceiver={this.receiveHtml}
           uploadProps={uploadProps}
-        />
+        /> */}
         {/*
         <div>Editor demo 2 (use markdown format ):
         </div>

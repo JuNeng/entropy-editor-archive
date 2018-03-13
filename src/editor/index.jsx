@@ -336,13 +336,13 @@ class EditorConcist extends React.Component {
     let ele = document.querySelector(".RichEditor-root");
 
     if (ele.classList.contains("openFullAll")) {
-      ele.className = ele.className.replace("openFullAll", "");
+      ele.className = ele.className.replace("openFullAll", "editorHidden");
       this.setState({
         // openFullText: lang[this.state.language].fullScreen
         openFullText: <Icon type="arrows-alt" />
       });
     } else {
-      ele.className += " openFullAll";
+      ele.className = ele.className.replace("editorHidden", "openFullAll");
 
       this.setState({
         // openFullText: lang[this.state.language].quitFullScreen
