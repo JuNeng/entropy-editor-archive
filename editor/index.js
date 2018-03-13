@@ -196,8 +196,8 @@ class EditorConcist extends React.Component {
     language = language || "en";
     this.setState({
       language,
-      // openFullText: lang[language].fullScreen,
-      openFullText: <Icon type="arrows-alt" />,
+      openFullText: lang[language].fullScreen,
+      // openFullText: <Icon type="arrows-alt" />,
       showSourceEditor: lang[language].sourceCode
     });
 
@@ -331,15 +331,15 @@ class EditorConcist extends React.Component {
     if (ele.classList.contains("openFullAll")) {
       ele.className = ele.className.replace("openFullAll", "editorHidden");
       this.setState({
-        // openFullText: lang[this.state.language].fullScreen
-        openFullText: <Icon type="arrows-alt" />
+        openFullText: lang[this.state.language].fullScreen
+        // openFullText: <Icon type="arrows-alt" />
       });
     } else {
       ele.className = ele.className.replace("editorHidden", "openFullAll");
 
       this.setState({
-        // openFullText: lang[this.state.language].quitFullScreen
-        openFullText: <Icon type="shrink" />
+        openFullText: lang[this.state.language].quitFullScreen
+        // openFullText: <Icon type="shrink" />
       });
     }
   }
