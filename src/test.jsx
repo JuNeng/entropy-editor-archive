@@ -166,7 +166,21 @@ class Test extends React.Component {
     ]
     return (
       <div>
-        <div>Editor demo 1 (use default html format ):
+        <div>Editor demo 0: Entropy version</div>
+        <LzEditor
+          active={true}
+          importContent={null}
+          cbReceiver={this.receiveHtml}
+          color={false}
+          video={false}
+          image={false}
+          audio={false}
+          alignment={false}
+          urls={false}
+          removeStyle={false}
+          pasteNoStyle={false}
+        />
+        {/* <div>Editor demo 1 (use default html format ):
         </div>
         <LzEditor active={true} importContent={this.state.htmlContent} cbReceiver={this.receiveHtml} uploadProps={uploadProps}/>
         <br/>
@@ -193,7 +207,7 @@ class Test extends React.Component {
           video={false}
           audio={false}
           convertFormat="raw"
-          lang="zh-CN"/>
+          lang="zh-CN"/> */}
       </div>
     );
   }

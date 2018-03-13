@@ -1,21 +1,27 @@
 {
-    "env": {
-        "browser": true,
-        "node": true
-    },
-
-    "globals": {
-        "React": true
-    },
-
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true,
-            "modules": true
-        }
-    },
-
-    "plugins": [
-        "react"
-    ]
+  "extends": [
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-var": "error",
+    "no-console": "warn",
+    "react/prop-types": "warn",
+    "no-unused-vars": "warn",
+    "react/no-string-refs": "warn"
+  }
 }
