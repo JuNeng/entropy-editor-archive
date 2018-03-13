@@ -1,2 +1,2 @@
-module.exports = require("./entropy_editor/index");
-exports.LzEditor = require("./entropy_editor/index");
+module.exports = require("./index");
+exports.LzEditor = require("./index");
