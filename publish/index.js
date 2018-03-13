@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
-module.exports = require('./editor/index');
-exports.LzEditor = require('./editor/index');
+module.exports = require("./entropy_editor/index");
+exports.LzEditor = require("./entropy_editor/index");
