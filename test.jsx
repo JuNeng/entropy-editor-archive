@@ -6,7 +6,7 @@ import { Base64 } from "js-base64";
 import md5 from "md5";
 import findIndex from "lodash/findIndex";
 import uniqBy from "lodash/uniqBy";
-import LzEditor from "./editor/index";
+import LzEditor from "./index";
 
 class Test extends React.Component {
   constructor(props) {

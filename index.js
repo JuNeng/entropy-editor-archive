@@ -1,2 +1,2 @@
-module.exports = require("./index");
-exports.LzEditor = require("./index");
+module.exports = require("./editor/index");
+exports.LzEditor = require("./editor/index");
