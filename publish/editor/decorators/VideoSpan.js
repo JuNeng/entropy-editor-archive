@@ -27,10 +27,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _draftJs = require("draft-js");
 
-var _decoratorStyle = require("./decoratorStyle.css");
-
-var _decoratorStyle2 = _interopRequireDefault(_decoratorStyle);
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
