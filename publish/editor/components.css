@@ -1,12 +1,11 @@
-
-.editorHidden{
+.editorHidden {
   z-index: 10;
   overflow: hidden;
   position: relative;
 }
 .editor_container {
-  border: 1px solid #E9E9E9;
-  background-color: #F9F9F9;
+  border: 1px solid #e9e9e9;
+  background-color: #f9f9f9;
   padding: 5px;
 }
 
@@ -16,9 +15,9 @@
 }
 
 .editor_middle {
-  background-color: #FFF;
-  border: 1px solid #E9E9E9;
-  box-shadow: 3px 3px 5px #AAA inset;
+  background-color: #fff;
+  border: 1px solid #e9e9e9;
+  box-shadow: 3px 3px 5px #aaa inset;
 }
 
 .editor_bottom {
@@ -33,25 +32,25 @@
 }
 
 .RichEditor-root {
-  background: #FFF;
-  border: 1px solid #DDD;
+  background: #fff;
+  border: 1px solid #ddd;
   font-size: 14px;
   padding: 15px;
 }
 
 .RichEditor-editor {
-  border-top: 1px solid #DDD;
+  border-top: 1px solid #ddd;
   cursor: text;
   font-size: 16px;
 }
 
 .public-DraftStyleDefault-ul {
   list-style: disc;
-  padding-left: 2.0rem
+  padding-left: 2rem;
 }
 
 .public-DraftStyleDefault-ol {
-  padding-left: 2.0rem;
+  padding-left: 2rem;
   list-style-type: decimal;
   counter-reset: ol-counter;
 }
@@ -72,7 +71,7 @@
   line-height: initial;
 }
 
-.public-DraftEditor-content>div>* {
+.public-DraftEditor-content > div > * {
   margin: 10px 0;
 }
 
@@ -86,9 +85,9 @@
 }
 
 .RichEditor-editor .RichEditor-blockquote {
-  border-left: 5px solid #EEE;
+  border-left: 5px solid #eee;
   color: #666;
-  font-family: 'Hoefler Text', 'Georgia', serif;
+  font-family: "Hoefler Text", "Georgia", serif;
   font-style: italic;
   margin: 16px 0;
   padding: 10px 20px;
@@ -112,22 +111,23 @@
 
 .RichEditor-editor .public-DraftStyleDefault-pre {
   background-color: rgba(0, 0, 0, 0.05);
-  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+  font-family: "Inconsolata", "Menlo", "Consolas", monospace;
   font-size: 16px;
   padding: 20px;
 }
 
 .RichEditor-controls {
-  font-family: 'Helvetica', sans-serif;
+  font-family: "Helvetica", sans-serif;
   font-size: 14px;
-  margin-bottom: 5px;
   user-select: none;
-  display: inline;
-  border-left: 1px solid #EEE;
+}
+
+.RichEditor-controls-container {
+  display: flex;
 }
 
 .RichEditor-controls-split {
-  padding-right: 20px
+  padding-right: 20px;
 }
 
 .RichEditor-color span {
@@ -137,17 +137,16 @@
 }
 
 .RichEditor-styleButton {
-  color: #999;
+  color: #7d7f8e;
   cursor: pointer;
-  margin: 0 8px;
   padding: 3px 5px !important;
   display: inline-block;
   position: relative;
   margin: 8px 5px;
-  line-height: 20px;
+  line-height: 1.5;
   font-size: 16px;
 }
-.RichEditor-styleButton.ant-btn.ant-btn-primary.ant-btn-icon-only{
+.RichEditor-styleButton.ant-btn.ant-btn-primary.ant-btn-icon-only {
   color: #fff;
 }
 
@@ -170,6 +169,8 @@
   margin: 0px 5px;
 }
 
-.RichEditor-color-active {}
+.RichEditor-color-active {
+}
 
-.RichEditor-color:nth-child(2n+1) {}
+.RichEditor-color:nth-child(2n + 1) {
+}
