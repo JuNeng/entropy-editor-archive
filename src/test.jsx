@@ -8,6 +8,8 @@ import findIndex from "lodash/findIndex";
 import uniqBy from "lodash/uniqBy";
 import LzEditor from "./index";
 
+import "./global/supports/resources/system.less";
+
 class Test extends React.Component {
   constructor(props) {
     super(props);
