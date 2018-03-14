@@ -1,8 +1,8 @@
 /* @flow */
-import {OrderedSet, is} from 'immutable';
+import { OrderedSet, is } from "immutable";
 
-import type {CharacterMetadata} from 'draft-js';
-import type {List} from 'immutable';
+import type { CharacterMetadata } from "draft-js";
+import type { List } from "immutable";
 
 type EntityKey = ?string;
 type Style = OrderedSet<string>;
@@ -30,17 +30,14 @@ export default function getEntityRanges(
         getStyleRanges(
           text.slice(rangeStart, i),
           charMetaList.slice(rangeStart, i)
-        ),
+        )
       ]);
       rangeStart = i;
     }
   }
   ranges.push([
     charEntity,
-    getStyleRanges(
-      text.slice(rangeStart),
-      charMetaList.slice(rangeStart)
-    ),
+    getStyleRanges(text.slice(rangeStart), charMetaList.slice(rangeStart))
   ]);
   return ranges;
 }

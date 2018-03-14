@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Tooltip, Icon} from "antd"
+import React, { Component } from "react";
+import { Tooltip, Icon } from "antd";
 class AddUrl extends Component {
   constructor(props) {
     super(props);
@@ -7,11 +7,15 @@ class AddUrl extends Component {
   render() {
     return (
       <div className="RichEditor-controls">
-        <span className="RichEditor-styleButton" onClick={this.props.onToggle} title={this.props.lang.addLink}>
-          <Icon type="editor_link"/>
+        <span
+          className="RichEditor-styleButton"
+          onClick={this.props.onToggle}
+          title={this.props.lang.addLink}
+        >
+          <Icon type="editor_link" />
         </span>
       </div>
-    )
+    );
   }
 }
 
@@ -22,11 +26,15 @@ class CloseUrl extends Component {
   render() {
     return (
       <div className="RichEditor-controls">
-        <span className="RichEditor-styleButton" onClick={this.props.onToggle} title={this.props.lang.removeLink}>
-          <Icon type="editor_unlink"/>
+        <span
+          className="RichEditor-styleButton"
+          onClick={this.props.onToggle}
+          title={this.props.lang.removeLink}
+        >
+          <Icon type="editor_unlink" />
         </span>
       </div>
-    )
+    );
   }
 }
 

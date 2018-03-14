@@ -1,14 +1,14 @@
 /* @flow */
 
-type Attributes = {[key: string]: string};
-type StringMap = {[key: string]: string};
+type Attributes = { [key: string]: string };
+type StringMap = { [key: string]: string };
 
 // Lifted from: https://github.com/facebook/react/blob/master/src/renderers/dom/shared/HTMLDOMPropertyConfig.js
 const ATTR_NAME_MAP: StringMap = {
-  acceptCharset: 'accept-charset',
-  className: 'class',
-  htmlFor: 'for',
-  httpEquiv: 'http-equiv',
+  acceptCharset: "accept-charset",
+  className: "class",
+  htmlFor: "for",
+  httpEquiv: "http-equiv"
 };
 
 function normalizeAttributes(attributes: ?Attributes) {

@@ -1,6 +1,6 @@
-import {EditorState, SelectionState} from 'draft-js';
+import { EditorState, SelectionState } from "draft-js";
 
-import getSelectedBlocks from './getSelectedBlocks';
+import getSelectedBlocks from "./getSelectedBlocks";
 
 /**
  * Calls a provided `modifier` function with a selection for each
@@ -32,7 +32,7 @@ export default (editorState, modifier, ...args) => {
   const selectedBlocks = getSelectedBlocks(contentState, startKey, endKey);
 
   let finalEditorState = editorState;
-  selectedBlocks.forEach((block) => {
+  selectedBlocks.forEach(block => {
     const currentBlockKey = block.getKey();
     let selectionStart = startOffset;
     let selectionEnd = endOffset;
@@ -52,7 +52,7 @@ export default (editorState, modifier, ...args) => {
       anchorKey: currentBlockKey,
       anchorOffset: selectionStart,
       focusKey: currentBlockKey,
-      focusOffset: selectionEnd,
+      focusOffset: selectionEnd
     });
 
     finalEditorState = modifier(finalEditorState, selection, ...args);

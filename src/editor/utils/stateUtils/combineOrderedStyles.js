@@ -1,13 +1,13 @@
 /* @flow */
 
-type Attributes = {[key: string]: string};
-type StyleDescr = {[key: string]: number | string};
+type Attributes = { [key: string]: string };
+type StyleDescr = { [key: string]: number | string };
 type RenderConfig = {
-  element?: string;
-  attributes?: Attributes;
-  style?: StyleDescr;
+  element?: string,
+  attributes?: Attributes,
+  style?: StyleDescr
 };
-type StyleMap = {[styleName: string]: RenderConfig};
+type StyleMap = { [styleName: string]: RenderConfig };
 type StyleOrder = Array<string>;
 type OrderedStyleMap = [StyleMap, StyleOrder];
 
@@ -19,12 +19,16 @@ function combineOrderedStyles(
     return defaults;
   }
   let [defaultStyleMap, defaultStyleOrder] = defaults;
-  let styleMap = Object.assign({},defaultStyleMap);//{...defaultStyleMap}
+  let styleMap = Object.assign({}, defaultStyleMap); //{...defaultStyleMap}
   let styleOrder = [...defaultStyleOrder];
   for (let styleName of Object.keys(customMap)) {
     if (defaultStyleMap.hasOwnProperty(styleName)) {
       let defaultStyles = defaultStyleMap[styleName];
-      styleMap[styleName] =Object.assign({},defaultStyles,customMap[styleName]);// {...defaultStyles, ...customMap[styleName]};
+      styleMap[styleName] = Object.assign(
+        {},
+        defaultStyles,
+        customMap[styleName]
+      ); // {...defaultStyles, ...customMap[styleName]};
     } else {
       styleMap[styleName] = customMap[styleName];
       styleOrder.push(styleName);

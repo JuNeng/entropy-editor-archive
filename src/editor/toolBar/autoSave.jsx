@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 class AutoSave extends Component {
   constructor(props) {
     super(props);
@@ -10,7 +10,7 @@ class AutoSave extends Component {
           {this.props.lang.autoSave}
         </span>
       </div>
-    )
+    );
   }
 }
 module.exports = AutoSave;

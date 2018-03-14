@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
+import { Modal, Button, message, Icon } from "antd";
 import {
-  Modal,
-  Button,
-  message,
-  Icon
-} from 'antd';
-import {UploadImage,GroupUpload} from '../../global/components/businessComponents';
+  UploadImage
+  // GroupUpload
+} from "../../global/components/businessComponents";
 import cloneDeep from "lodash/cloneDeep";
 import find from "lodash/cloneDeep";
 
@@ -23,7 +21,9 @@ class ImgStyleControls extends Component {
 
     this.onImgToggle = this.onImgToggle.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-    this.prepareToSendImageToEditor = this.prepareToSendImageToEditor.bind(this);
+    this.prepareToSendImageToEditor = this.prepareToSendImageToEditor.bind(
+      this
+    );
     this.getImgObject = this.getImgObject.bind(this);
 
     this.groupAppend = this.groupAppend.bind(this);
@@ -38,13 +38,16 @@ class ImgStyleControls extends Component {
   getImgObject(fileObj) {
     this.state.images = fileObj;
     if (!!this.state.images) {
-      this.setState({disabled: false})
+      this.setState({ disabled: false });
     }
     this.forceUpdate();
   }
   prepareToSendImageToEditor() {
     if (!!this.state.images.length) {
-      this.state.loadingRemoteImageFun = message.loading(this.props.lang.inPreviewProgress, 0);
+      this.state.loadingRemoteImageFun = message.loading(
+        this.props.lang.inPreviewProgress,
+        0
+      );
     }
   }
   successLoading(type) {
@@ -57,28 +60,46 @@ class ImgStyleControls extends Component {
       this.successedCount = 0;
       setTimeout(this.state.loadingRemoteImageFun, 500);
     }
-    console.log('successLoading this.state.images',this.state.images);
-    let pfopImages = this.state.images&&this.state.images.map((item) => {
-      item.url = item.url && item.url.substr(0, ~ item.url.lastIndexOf("?t=")
-        ? item.url.lastIndexOf("?t=")
-        : item.url.length)+"?t=foreditor"
-      return item;
-    });
+    console.log("successLoading this.state.images", this.state.images);
+    let pfopImages =
+      this.state.images &&
+      this.state.images.map(item => {
+        item.url =
+          item.url &&
+          item.url.substr(
+            0,
+            ~item.url.lastIndexOf("?t=")
+              ? item.url.lastIndexOf("?t=")
+              : item.url.length
+          ) + "?t=foreditor";
+        return item;
+      });
     // console.log("successLoading provisible false");
-    let validPfopImages = find(pfopImages, (item) => {
+    let validPfopImages = find(pfopImages, item => {
       return !!item.url;
     });
     if (validPfopImages.length) {
-      this.setState({provisible: false, pfopImages: validPfopImages, previsible: true});
+      this.setState({
+        provisible: false,
+        pfopImages: validPfopImages,
+        previsible: true
+      });
     } else {
-      console.warn('Invalid uploading images, please check your uploading object again!')
+      console.warn(
+        "Invalid uploading images, please check your uploading object again!"
+      );
     }
   }
   realLoading(type) {
     let images = cloneDeep(this.state.pfopImages);
     // console.log("images", images);
     // console.log("realLoading provisible false");
-    this.setState({provisible: false, images: [], pfopImages: [], previsible: false});
+    this.setState({
+      provisible: false,
+      images: [],
+      pfopImages: [],
+      previsible: false
+    });
     this.props.receiveImage(images);
   }
   failureLoading(event, index) {
@@ -87,33 +108,35 @@ class ImgStyleControls extends Component {
       setTimeout(() => {
         //auto refresh when invalid
         this.reloadPfopingPictrue(picture, index);
-      }, 300)
+      }, 300);
     }
   }
   reloadPfopingPictrue(picture, index) {
-    let thePicture = picture.substr(0, ~ picture.lastIndexOf("?t=")
-      ? picture.lastIndexOf("?t=")
-      : picture.length);
-    let n = picture.substr((~ picture.lastIndexOf("?t=")
-      ? picture.lastIndexOf("?t=")
-      : picture.length) + 3)
-    picture = thePicture + "?t=" + (parseInt(!!n
-      ? n
-      : "0") + 1);
+    let thePicture = picture.substr(
+      0,
+      ~picture.lastIndexOf("?t=") ? picture.lastIndexOf("?t=") : picture.length
+    );
+    let n = picture.substr(
+      (~picture.lastIndexOf("?t=")
+        ? picture.lastIndexOf("?t=")
+        : picture.length) + 3
+    );
+    picture = thePicture + "?t=" + (parseInt(!!n ? n : "0") + 1);
     this.state.images[index].url = picture;
     this.forceUpdate();
   }
   reloadUploadingPictrue(picture, index) {
     // console.log("reloadUploadingPictrue picture, index", picture, index);
-    let thePicture = picture.substr(0, ~ picture.lastIndexOf("?t=")
-      ? picture.lastIndexOf("?t=")
-      : picture.length);
-    let n = picture.substr((~ picture.lastIndexOf("?t=")
-      ? picture.lastIndexOf("?t=")
-      : picture.length) + 3)
-    picture = thePicture + "?t=" + (parseInt(!!n
-      ? n
-      : "0") + 1);
+    let thePicture = picture.substr(
+      0,
+      ~picture.lastIndexOf("?t=") ? picture.lastIndexOf("?t=") : picture.length
+    );
+    let n = picture.substr(
+      (~picture.lastIndexOf("?t=")
+        ? picture.lastIndexOf("?t=")
+        : picture.length) + 3
+    );
+    picture = thePicture + "?t=" + (parseInt(!!n ? n : "0") + 1);
     if (!!this.state.pfopImages[index]) {
       this.state.pfopImages[index].url = picture;
     }
@@ -122,41 +145,49 @@ class ImgStyleControls extends Component {
   groupAppend(pictureList) {
     // console.log("groupAppend this.state.images", pictureList, this.state.images);
     if (!pictureList.length) {
-      console.warn("ERROR: no pictureList sent to me, see pictureList", pictureList);
+      console.warn(
+        "ERROR: no pictureList sent to me, see pictureList",
+        pictureList
+      );
       return false;
     }
     let images = pictureList.map(item => {
-      return {"url": item};
-    })
+      return { url: item };
+    });
     // this.setState({ provisible: false, previsible: false,"images": images });
     // this.prepareToSendImageToEditor();
 
-    this.setState({images: [], pfopImages: []});
-    setTimeout(()=>{
-      this.setState({provisible: false, previsible: false});
-    },1000);
+    this.setState({ images: [], pfopImages: [] });
+    setTimeout(() => {
+      this.setState({ provisible: false, previsible: false });
+    }, 1000);
     this.props.receiveImage(cloneDeep(images));
-    pictureList=[];
+    pictureList = [];
   }
 
   onImgToggle() {
-    this.setState({provisible: true, previsible: false, disabled: true, images: []});
+    this.setState({
+      provisible: true,
+      previsible: false,
+      disabled: true,
+      images: []
+    });
   }
 
   handleCancel(e) {
-  // console.log("handleCancel provisible false");
-    this.setState({provisible: false, previsible: false, images: []});
+    this.setState({ provisible: false, previsible: false, images: [] });
   }
+
   handleCancelUploading(e) {
-    this.setState({provisible: false, previsible: false, pfopImages: []});
+    this.setState({ provisible: false, previsible: false, pfopImages: [] });
   }
   render() {
-    let className = 'RichEditor-styleButton';
+    let className = "RichEditor-styleButton";
     let that = this;
     return (
       <div className="RichEditor-controls">
-
-        <GroupUpload
+        {/* Lian: We don't need it by now. */}
+        {/* <GroupUpload
           limitCount={50}
           imageList={this.state.images&&this.state.images.map((item) => {
             item.url
@@ -170,34 +201,49 @@ class ImgStyleControls extends Component {
           <span className={className}>
               <Icon type="editor_image_masker" title={this.props.lang.imageMasker}/>
           </span>
-        </GroupUpload>
+        </GroupUpload> */}
         <span className={className} onClick={that.onImgToggle}>
-            <Icon type="editor_image" title={this.props.lang.originalImage}/>
+          <Icon type="editor_image" title={this.props.lang.originalImage} />
         </span>
-
         <div
           style={{
-          width: 0,
-          height: 0,
-          display: "inline",
-          overflow: "hidden",
-          position: "absolute"
-        }}>{this.state.images&&this.state.images.map((item, index) => <img style = {{width:"100px"}} src = {
-            item.url+"?t=10"
-          }
-          onError = {
-            (event) => this.failureLoading(event, index)
-          }
-          onLoad = {
-            () => this.successLoading("fromImg")
-          } />)}</div>
+            width: 0,
+            height: 0,
+            display: "inline",
+            overflow: "hidden",
+            position: "absolute"
+          }}
+        >
+          {this.state.images &&
+            this.state.images.map((item, index) => (
+              <img
+                style={{ width: "100px" }}
+                src={item.url + "?t=10"}
+                onError={event => this.failureLoading(event, index)}
+                onLoad={() => this.successLoading("fromImg")}
+              />
+            ))}
+        </div>
         <Modal
           title={this.props.lang.insertImageModalTitle}
           visible={that.state.provisible}
           closable={false}
-          footer={[< Button key = "back" size = "large" onClick = {
-            that.handleCancel
-          } > {this.props.lang.cancelText} < /Button>, <Button key="submit" type="primary" size="large" disabled={that.state.disabled} onClick={()=>that.successLoading("fromOld")}> {this.props.lang.OKText} </Button >]}>
+          footer={[
+            <Button key="back" size="large" onClick={that.handleCancel}>
+              {this.props.lang.cancelText}
+            </Button>,
+            <Button
+              key="submit"
+              type="primary"
+              size="large"
+              disabled={that.state.disabled}
+              onClick={() => that.successLoading("fromOld")}
+            >
+              {" "}
+              {this.props.lang.OKText}{" "}
+            </Button>
+          ]}
+        >
           <UploadImage
             isMultiple={true}
             fileList={that.state.images}
@@ -207,26 +253,52 @@ class ImgStyleControls extends Component {
             uploadProps={this.props.uploadProps}
             lang={this.props.lang}
             limit={10}
-            fileType="image"/>
+            fileType="image"
+          />
         </Modal>
         <Modal
           title={this.props.lang.previewImageModalTitle}
           visible={that.state.previsible}
           width={800}
           closable={false}
-          footer={[< Button key = "back" size = "large" onClick = {
-            that.handleCancelUploading
-          } > {this.props.lang.cancelText} < /Button>, <Button key="submit" type="primary" size="large" disabled={that.state.pfopImages.length==0} onClick={()=>that.realLoading("fromOld")}> {this.props.lang.validatedImage} </Button >]}>
-          <div className="uploadingImagies">{that.state.pfopImages.map((item, index) => {
-              // console.log("item,index", item, index);
+          footer={[
+            <Button
+              key="back"
+              size="large"
+              onClick={that.handleCancelUploading}
+            >
+              {this.props.lang.cancelText}
+            </Button>,
+            <Button
+              key="submit"
+              type="primary"
+              size="large"
+              disabled={that.state.pfopImages.length == 0}
+              onClick={() => that.realLoading("fromOld")}
+            >
+              {this.props.lang.validatedImage}
+            </Button>
+          ]}
+        >
+          <div className="uploadingImagies">
+            {that.state.pfopImages.map((item, index) => {
               let url = item.url;
-              return <div>
-                <a onClick={() => that.reloadUploadingPictrue(url, index)} title={this.props.lang.refreshImage}><Icon type="reload"/></a><img src={url}/></div>
-            })
-}</div>
+              return (
+                <div>
+                  <a
+                    onClick={() => that.reloadUploadingPictrue(url, index)}
+                    title={this.props.lang.refreshImage}
+                  >
+                    <Icon type="reload" />
+                  </a>
+                  <img src={url} />
+                </div>
+              );
+            })}
+          </div>
         </Modal>
       </div>
-    )
+    );
   }
 }
 // Remove `propTypes` validation to fit React 16

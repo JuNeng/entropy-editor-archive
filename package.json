@@ -1,15 +1,23 @@
 {
   "name": "react-lz-editor",
-  "version": "1.0.2",
-  "description": "An open source react editor based on draft-Js and ant design, good support HTML, markdown and Draft Raw format.",
+  "version": "1.0.3",
+  "description":
+    "An open source react editor based on draft-Js and ant design, good support HTML, markdown and Draft Raw format.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "typecheck": "flow",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build && lessc src/global/supports/resources/system.less src/global/supports/resources/system.css",
-    "release": "webpack -p --progress --colors --config webpack.release.config.js",
-    "publish": "babel -d publish/ src/ --no-comments && lessc src/global/supports/resources/system.less publish/global/supports/resources/system.css"
+    "precommit": "lint-staged",
+    "dev":
+      "webpack-dev-server --devtool eval --progress --colors --hot --content-base build",
+    "release":
+      "webpack -p --progress --colors --config webpack.release.config.js",
+    "publish":
+      "babel -d publish/ src/ --no-comments && lessc src/editor/styles/index.less publish/editor/styles/index.less"
+  },
+  "lint-staged": {
+    "*.{js,jsx,json,less,css,md}": ["prettier --write", "git add"]
   },
   "repository": {
     "type": "git",
@@ -42,17 +50,21 @@
     "babel-preset-stage-2": "^6.18.0",
     "css-loader": "^0.23.1",
     "eslint": "^3.12.2",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-react": "^6.8.0",
     "file-loader": "^0.8.5",
     "flow-bin": "^0.37.4",
+    "hmacsha1": "^1.0.0",
+    "husky": "^0.14.3",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
+    "lint-staged": "^7.0.0",
+    "md5": "^2.2.1",
+    "prettier": "^1.11.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
-    "webpack-dev-server": "^1.14.1",
-    "hmacsha1": "^1.0.0",
-    "md5": "^2.2.1"
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "antd": "^2.8.3",

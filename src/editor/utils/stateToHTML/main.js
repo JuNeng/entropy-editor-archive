@@ -1,43 +1,65 @@
 /* @flow */
 
-import {Entity} from 'draft-js';
+import { Entity } from "draft-js";
 import {
   getEntityRanges,
   BLOCK_TYPE,
   ENTITY_TYPE,
-  INLINE_STYLE,
-} from '../stateUtils/main';
+  INLINE_STYLE
+} from "../stateUtils/main";
 
-import type {ContentState, ContentBlock, EntityInstance} from 'draft-js';
-import type {CharacterMetaList} from '../stateUtils/main';
-import {colorStyleMap} from "../colorConfig"
+import type { ContentState, ContentBlock, EntityInstance } from "draft-js";
+import type { CharacterMetaList } from "../stateUtils/main";
+import { colorStyleMap } from "../colorConfig";
 
-type StringMap = {[key: string]: ?string};
-type AttrMap = {[key: string]: StringMap};
+type StringMap = { [key: string]: ?string };
+type AttrMap = { [key: string]: StringMap };
 
-const {
-  BOLD,
-  CODE,
-  ITALIC,
-  STRIKETHROUGH,
-  UNDERLINE,
-} = INLINE_STYLE;
+const { BOLD, CODE, ITALIC, STRIKETHROUGH, UNDERLINE } = INLINE_STYLE;
 
-const INDENT = '  ';
-const BREAK = '<br>';
+const INDENT = "  ";
+const BREAK = "<br>";
 
 // Map entity data to element attributes.
 const ENTITY_ATTR_MAP: AttrMap = {
-  [ENTITY_TYPE.LINK]: {url: 'href', rel: 'rel', target: 'target', title: 'title', className: 'class'},
-  [ENTITY_TYPE.IMAGE]: {src: 'src', height: 'height', width: 'width', alt: 'alt', className: 'class'},
-  [ENTITY_TYPE.VIDEO]: {src: 'src', controls: 'controls',height: 'height', width: 'width', alt: 'alt', className: 'class' },
-  [ENTITY_TYPE.AUDIO]: {src: 'src', controls: 'controls',height: 'height', width: 'width', alt: 'alt', className: 'class' },
+  [ENTITY_TYPE.LINK]: {
+    url: "href",
+    rel: "rel",
+    target: "target",
+    title: "title",
+    className: "class"
+  },
+  [ENTITY_TYPE.IMAGE]: {
+    src: "src",
+    height: "height",
+    width: "width",
+    alt: "alt",
+    className: "class"
+  },
+  [ENTITY_TYPE.VIDEO]: {
+    src: "src",
+    controls: "controls",
+    height: "height",
+    width: "width",
+    alt: "alt",
+    className: "class"
+  },
+  [ENTITY_TYPE.AUDIO]: {
+    src: "src",
+    controls: "controls",
+    height: "height",
+    width: "width",
+    alt: "alt",
+    className: "class"
+  }
 };
 
 // Map entity data to element attributes.
 const DATA_TO_ATTR = {
   [ENTITY_TYPE.LINK](entityType: string, entity: EntityInstance): StringMap {
-    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType)
+      ? ENTITY_ATTR_MAP[entityType]
+      : {};
     let data = entity.getData();
     let attrs = {};
     for (let dataKey of Object.keys(data)) {
@@ -45,15 +67,16 @@ const DATA_TO_ATTR = {
       if (attrMap.hasOwnProperty(dataKey)) {
         let attrKey = attrMap[dataKey];
         attrs[attrKey] = dataValue;
-      }
-      else if (DATA_ATTRIBUTE.test(dataKey)){
+      } else if (DATA_ATTRIBUTE.test(dataKey)) {
         attrs[dataKey] = dataValue;
       }
     }
     return attrs;
   },
   [ENTITY_TYPE.IMAGE](entityType: string, entity: EntityInstance): StringMap {
-    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType)
+      ? ENTITY_ATTR_MAP[entityType]
+      : {};
     let data = entity.getData();
     let attrs = {};
     for (let dataKey of Object.keys(data)) {
@@ -66,7 +89,9 @@ const DATA_TO_ATTR = {
     return attrs;
   },
   [ENTITY_TYPE.VIDEO](entityType: string, entity: EntityInstance): StringMap {
-    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType)
+      ? ENTITY_ATTR_MAP[entityType]
+      : {};
     let data = entity.getData();
     let attrs = {};
     for (let dataKey of Object.keys(data)) {
@@ -79,7 +104,9 @@ const DATA_TO_ATTR = {
     return attrs;
   },
   [ENTITY_TYPE.AUDIO](entityType: string, entity: EntityInstance): StringMap {
-    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
+    let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType)
+      ? ENTITY_ATTR_MAP[entityType]
+      : {};
     let data = entity.getData();
     let attrs = {};
     for (let dataKey of Object.keys(data)) {
@@ -90,7 +117,7 @@ const DATA_TO_ATTR = {
       }
     }
     return attrs;
-  },
+  }
 };
 
 // The reason this returns an array is because a single block might get wrapped
@@ -98,37 +125,37 @@ const DATA_TO_ATTR = {
 function getTags(blockType: string): Array<string> {
   switch (blockType) {
     case BLOCK_TYPE.HEADER_ONE:
-      return ['h1'];
+      return ["h1"];
     case BLOCK_TYPE.HEADER_TWO:
-      return ['h2'];
+      return ["h2"];
     case BLOCK_TYPE.HEADER_THREE:
-      return ['h3'];
+      return ["h3"];
     case BLOCK_TYPE.HEADER_FOUR:
-      return ['h4'];
+      return ["h4"];
     case BLOCK_TYPE.HEADER_FIVE:
-      return ['h5'];
+      return ["h5"];
     case BLOCK_TYPE.HEADER_SIX:
-      return ['h6'];
+      return ["h6"];
     case BLOCK_TYPE.UNORDERED_LIST_ITEM:
     case BLOCK_TYPE.ORDERED_LIST_ITEM:
-      return ['li'];
+      return ["li"];
     case BLOCK_TYPE.BLOCKQUOTE:
-      return ['blockquote'];
+      return ["blockquote"];
     case BLOCK_TYPE.CODE:
-      return ['pre', 'code'];
+      return ["pre", "code"];
     // case BLOCK_TYPE.ATOMIC:
     //   return ['figure'];//Support atomic block type
     default:
-      return ['p'];
+      return ["p"];
   }
 }
 
 function getWrapperTag(blockType: string): ?string {
   switch (blockType) {
     case BLOCK_TYPE.UNORDERED_LIST_ITEM:
-      return 'ul';
+      return "ul";
     case BLOCK_TYPE.ORDERED_LIST_ITEM:
-      return 'ol';
+      return "ol";
     default:
       return null;
   }
@@ -159,7 +186,7 @@ class MarkupGenerator {
       this.processBlock();
     }
     this.closeWrapperTag();
-    return this.output.join('').trim();
+    return this.output.join("").trim();
   }
 
   processBlock() {
@@ -176,7 +203,7 @@ class MarkupGenerator {
       }
     }
     this.indent();
-    this.writeStartTag(blockType,blockData);
+    this.writeStartTag(blockType, blockData);
     this.output.push(this.renderBlockContent(block));
     // Look ahead and see if we will nest list.
     let nextBlock = this.getNextBlock();
@@ -215,14 +242,17 @@ class MarkupGenerator {
     return this.blocks[this.currentBlock + 1];
   }
 
-  writeStartTag(blockType,blockData) {
+  writeStartTag(blockType, blockData) {
     let tags = getTags(blockType);
-    let blockStyle="",blockAlign=blockData.get("textAlignment");
+    let blockStyle = "",
+      blockAlign = blockData.get("textAlignment");
     if (blockAlign) {
-      blockStyle="text-align:"+blockAlign+';'
+      blockStyle = "text-align:" + blockAlign + ";";
     }
     for (let tag of tags) {
-      this.output.push(`<${tag} ${blockStyle?(" style='"+blockStyle+"'"):""}>`);
+      this.output.push(
+        `<${tag} ${blockStyle ? " style='" + blockStyle + "'" : ""}>`
+      );
     }
   }
 
@@ -235,7 +265,7 @@ class MarkupGenerator {
       for (let tag of tags) {
         output.unshift(`</${tag}>`);
       }
-      this.output.push(output.join('') + '\n');
+      this.output.push(output.join("") + "\n");
     }
   }
 
@@ -247,7 +277,7 @@ class MarkupGenerator {
   }
 
   closeWrapperTag() {
-    let {wrapperTag} = this;
+    let { wrapperTag } = this;
     if (wrapperTag) {
       this.indentLevel -= 1;
       this.indent();
@@ -263,66 +293,89 @@ class MarkupGenerator {
   renderBlockContent(block: ContentBlock): string {
     let blockType = block.getType();
     let text = block.getText();
-    if (text === '') {
+    if (text === "") {
       // Prevent element collapse if completely empty.
       return BREAK;
     }
     text = this.preserveWhitespace(text);
     let charMetaList: CharacterMetaList = block.getCharacterList();
     let entityPieces = getEntityRanges(text, charMetaList);
-    return entityPieces.map(([entityKey, stylePieces]) => {
-      let content = stylePieces.map(([text, style]) => {
-        let content = encodeContent(text);
-        // These are reverse alphabetical by tag name.
-        if (style.has(BOLD)) {
-          content = `<strong>${content}</strong>`;
-        }
-        if (style.has(UNDERLINE)) {
-          content = `<ins>${content}</ins>`;
-        }
-        if (style.has(ITALIC)) {
-          content = `<em>${content}</em>`;
-        }
-        if (style.has(STRIKETHROUGH)) {
-          content = `<del>${content}</del>`;
-        }
-        Object.keys(colorStyleMap).map(function(keyItem){
-            if (!!keyItem&&style.has(keyItem)) {
-                content = '<span style="color:' + colorStyleMap[keyItem].color + '">' + content + '</span>';
+    return entityPieces
+      .map(([entityKey, stylePieces]) => {
+        let content = stylePieces
+          .map(([text, style]) => {
+            let content = encodeContent(text);
+            // These are reverse alphabetical by tag name.
+            if (style.has(BOLD)) {
+              content = `<strong>${content}</strong>`;
             }
-        });
-        if (style.has(CODE)) {
-          // If our block type is CODE then we are already wrapping the whole
-          // block in a `<code>` so don't wrap inline code elements.
-          content = (blockType === BLOCK_TYPE.CODE) ? content : `<code>${content}</code>`;
+            if (style.has(UNDERLINE)) {
+              content = `<ins>${content}</ins>`;
+            }
+            if (style.has(ITALIC)) {
+              content = `<em>${content}</em>`;
+            }
+            if (style.has(STRIKETHROUGH)) {
+              content = `<del>${content}</del>`;
+            }
+            Object.keys(colorStyleMap).map(function(keyItem) {
+              if (!!keyItem && style.has(keyItem)) {
+                content =
+                  '<span style="color:' +
+                  colorStyleMap[keyItem].color +
+                  '">' +
+                  content +
+                  "</span>";
+              }
+            });
+            if (style.has(CODE)) {
+              // If our block type is CODE then we are already wrapping the whole
+              // block in a `<code>` so don't wrap inline code elements.
+              content =
+                blockType === BLOCK_TYPE.CODE
+                  ? content
+                  : `<code>${content}</code>`;
+            }
+            return content;
+          })
+          .join("");
+        let entity = entityKey ? Entity.get(entityKey) : null;
+        // Note: The `toUpperCase` below is for compatability with some libraries that use lower-case for image blocks.
+        let entityType =
+          entity == null || !entity.getType()
+            ? null
+            : entity.getType().toUpperCase();
+        if (entityType != null && entityType === ENTITY_TYPE.LINK) {
+          let attrs = DATA_TO_ATTR.hasOwnProperty(entityType)
+            ? DATA_TO_ATTR[entityType](entityType, entity)
+            : null;
+          let attrString = stringifyAttrs(attrs);
+          return `<a${attrString}>${content}</a>`;
+        } else if (entityType != null && entityType === ENTITY_TYPE.IMAGE) {
+          let attrs = DATA_TO_ATTR.hasOwnProperty(entityType)
+            ? DATA_TO_ATTR[entityType](entityType, entity)
+            : null;
+          // console.log("renderBlockContent attrs",attrs);
+          let attrString = stringifyAttrs(attrs);
+          // console.log("renderBlockContent attrString",attrString);
+          return `<img${attrString}/>`;
+        } else if (entityType != null && entityType === ENTITY_TYPE.VIDEO) {
+          let attrs = DATA_TO_ATTR.hasOwnProperty(entityType)
+            ? DATA_TO_ATTR[entityType](entityType, entity)
+            : null;
+          let attrString = stringifyAttrs(attrs);
+          return `<video${attrString}></video>`;
+        } else if (entityType != null && entityType === ENTITY_TYPE.AUDIO) {
+          let attrs = DATA_TO_ATTR.hasOwnProperty(entityType)
+            ? DATA_TO_ATTR[entityType](entityType, entity)
+            : null;
+          let attrString = stringifyAttrs(attrs);
+          return `<audio${attrString}></audio>`;
+        } else {
+          return content;
         }
-        return content;
-      }).join('');
-      let entity = entityKey ? Entity.get(entityKey) : null;
-      // Note: The `toUpperCase` below is for compatability with some libraries that use lower-case for image blocks.
-      let entityType = (entity == null||!entity.getType()) ? null : entity.getType().toUpperCase();
-      if (entityType != null && entityType === ENTITY_TYPE.LINK) {
-        let attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null;
-        let attrString = stringifyAttrs(attrs);
-        return `<a${attrString}>${content}</a>`;
-      } else if (entityType != null && entityType === ENTITY_TYPE.IMAGE) {
-        let attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null;
-        // console.log("renderBlockContent attrs",attrs);
-        let attrString = stringifyAttrs(attrs);
-        // console.log("renderBlockContent attrString",attrString);
-        return `<img${attrString}/>`;
-      }  else if (entityType != null && entityType === ENTITY_TYPE.VIDEO) {
-        let attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null;
-        let attrString = stringifyAttrs(attrs);
-        return `<video${attrString}></video>`;
-      }  else if (entityType != null && entityType === ENTITY_TYPE.AUDIO) {
-        let attrs = DATA_TO_ATTR.hasOwnProperty(entityType) ? DATA_TO_ATTR[entityType](entityType, entity) : null;
-        let attrString = stringifyAttrs(attrs);
-        return `<audio${attrString}></audio>`;
-      } else {
-        return content;
-      }
-    }).join('');
+      })
+      .join("");
   }
 
   preserveWhitespace(text: string): string {
@@ -331,34 +384,34 @@ class MarkupGenerator {
     let newText = new Array(length);
     for (let i = 0; i < length; i++) {
       if (
-        text[i] === ' ' &&
-        (i === 0 || i === length - 1 || text[i - 1] === ' ')
+        text[i] === " " &&
+        (i === 0 || i === length - 1 || text[i - 1] === " ")
       ) {
-        newText[i] = '\xA0';
+        newText[i] = "\xA0";
       } else {
         newText[i] = text[i];
       }
     }
-    return newText.join('');
+    return newText.join("");
   }
-
 }
 
 function stringifyAttrs(attrs) {
   if (attrs == null) {
-    return '';
+    return "";
   }
   let parts = [];
   for (let attrKey of Object.keys(attrs)) {
     let attrValue = attrs[attrKey];
-    if (attrKey=="src") {// Get reality url resources.
-      attrValue=attrValue.replace(/[?#&].*$/g,"");
+    if (attrKey == "src") {
+      // Get reality url resources.
+      attrValue = attrValue.replace(/[?#&].*$/g, "");
     }
     if (attrValue != null) {
-      parts.push(` ${attrKey}="${encodeAttr(attrValue + '')}"`);
+      parts.push(` ${attrKey}="${encodeAttr(attrValue + "")}"`);
     }
   }
-  return parts.join('');
+  return parts.join("");
 }
 
 function canHaveDepth(blockType: string): boolean {
@@ -373,19 +426,28 @@ function canHaveDepth(blockType: string): boolean {
 
 function encodeContent(text: string): string {
   return text
-    .split('&').join('&amp;')
-    .split('<').join('&lt;')
-    .split('>').join('&gt;')
-    .split('\xA0').join('&nbsp;')
-    .split('\n').join(BREAK + '\n');
+    .split("&")
+    .join("&amp;")
+    .split("<")
+    .join("&lt;")
+    .split(">")
+    .join("&gt;")
+    .split("\xA0")
+    .join("&nbsp;")
+    .split("\n")
+    .join(BREAK + "\n");
 }
 
 function encodeAttr(text: string): string {
   return text
-    .split('&').join('&amp;')
-    .split('<').join('&lt;')
-    .split('>').join('&gt;')
-    .split('"').join('&quot;');
+    .split("&")
+    .join("&amp;")
+    .split("<")
+    .join("&lt;")
+    .split(">")
+    .join("&gt;")
+    .split('"')
+    .join("&quot;");
 }
 
 export default function stateToHTML(content: ContentState): string {

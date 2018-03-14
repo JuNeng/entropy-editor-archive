@@ -1,18 +1,15 @@
 /* @flow */
 
 // import autobind from 'class-autobind';
-import React, {Component} from 'react';
-import {Entity} from 'draft-js';
-
-// $FlowIssue - Flow doesn't understand CSS Modules
-import styles from './decoratorStyle.css';
+import React, { Component } from "react";
+import { Entity } from "draft-js";
 
 export default class VideoSpan extends Component {
-  constructor(props : Props) {
+  constructor(props: Props) {
     super(props);
     // autobind(this);
     const entity = Entity.get(this.props.entityKey);
-    const {width, height} = entity.getData();
+    const { width, height } = entity.getData();
     this.state = {
       width,
       height
@@ -20,16 +17,15 @@ export default class VideoSpan extends Component {
   }
 
   componentDidMount() {
-    const {width
-      , height} = this.state;
+    const { width, height } = this.state;
     const entity = Entity.get(this.props.entityKey);
-    const video = document.createElement('video');
-    const {src} = entity.getData();
+    const video = document.createElement("video");
+    const { src } = entity.getData();
     video.src = src;
     video.onload = () => {
       if (width == null || height == null) {
         // TODO: isMounted?
-        this.setState({width: video.width, height: video.height});
+        this.setState({ width: video.width, height: video.height });
         Entity.mergeData(this.props.entityKey, {
           width: video.width,
           height: video.height,
@@ -41,13 +37,13 @@ export default class VideoSpan extends Component {
   }
 
   render() {
-    const {width, height} = this.state;
+    const { width, height } = this.state;
     //let {className} = this.props;
     const entity = Entity.get(this.props.entityKey);
-    const {src} = entity.getData();
+    const { src } = entity.getData();
     //console.log("styles.root: ", styles.root); className = cx(className, styles.root);
     const videoStyle = {
-      verticalAlign: 'bottom',
+      verticalAlign: "bottom",
       backgroundImage: `url("${src}")`,
       backgroundSize: `${width}px ${height}px`,
       lineHeight: `${height}px`,
@@ -61,7 +57,7 @@ export default class VideoSpan extends Component {
     // onClick={this._onClick}           >   {this.props.children} </span>   );
     return (
       <figure className="editor-inline-video" onClick={this._onClick}>
-        <video controls="controls" src={`${src}`} className="media-video"></video>
+        <video controls="controls" src={`${src}`} className="media-video" />
       </figure>
     );
   }
@@ -70,10 +66,10 @@ export default class VideoSpan extends Component {
     //console.log('video click');
   }
 
-  _handleResize(event : Object, data : Object) {
-    const {width, height} = data.size;
-    this.setState({width, height});
-    Entity.mergeData(this.props.entityKey, {width, height});
+  _handleResize(event: Object, data: Object) {
+    const { width, height } = data.size;
+    this.setState({ width, height });
+    Entity.mergeData(this.props.entityKey, { width, height });
   }
 }
 //VideoSpan.propTypes={  children: React.PropTypes,  entityKey: string,  className?: string }
@@ -82,4 +78,4 @@ VideoSpan.defaultProps = {
   children: null,
   entityKey: "",
   className: ""
-}
+};

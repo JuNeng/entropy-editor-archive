@@ -1,6 +1,6 @@
-import getSelectedBlocks from './getSelectedBlocks';
+import getSelectedBlocks from "./getSelectedBlocks";
 
-export default (strategy) => (editorState, selection) => {
+export default strategy => (editorState, selection) => {
   const contentState = editorState.getCurrentContent();
   const currentSelection = selection || editorState.getSelection();
   const startKey = currentSelection.getStartKey();
@@ -17,27 +17,24 @@ export default (strategy) => (editorState, selection) => {
   const finalStartOffset = startOffset + 1;
   const finalEndOffset = endOffset - 1;
 
-  selectedBlocks.forEach((block) => {
-    strategy(
-      block,
-      (start, end) => {
-        if (entityFound) {
-          return;
-        }
-
-        const blockKey = block.getKey();
-
-        if (isSameBlock && (end < finalStartOffset || start > finalEndOffset)) {
-          return;
-        } else if (blockKey === startKey && end < finalStartOffset) {
-          return;
-        } else if (blockKey === endKey && start > finalEndOffset) {
-          return;
-        }
-
-        entityFound = true;
+  selectedBlocks.forEach(block => {
+    strategy(block, (start, end) => {
+      if (entityFound) {
+        return;
       }
-    );
+
+      const blockKey = block.getKey();
+
+      if (isSameBlock && (end < finalStartOffset || start > finalEndOffset)) {
+        return;
+      } else if (blockKey === startKey && end < finalStartOffset) {
+        return;
+      } else if (blockKey === endKey && start > finalEndOffset) {
+        return;
+      }
+
+      entityFound = true;
+    });
   });
 
   return entityFound;

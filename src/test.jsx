@@ -1,12 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-// import {LzEditor} from './index'
+import React from "react";
+import ReactDOM from "react-dom";
+
 import hmacsha1 from "hmacsha1";
-import {Base64} from "js-base64";
+import { Base64 } from "js-base64";
 import md5 from "md5";
 import findIndex from "lodash/findIndex";
 import uniqBy from "lodash/uniqBy";
-import LzEditor from './editor/index.jsx'
+import LzEditor from "./index";
+
+import "./global/supports/resources/system.less";
+
 class Test extends React.Component {
   constructor(props) {
     super(props);
@@ -32,19 +35,20 @@ class Test extends React.Component {
                 <p>“You’re going to look — it’s impossible not to,” Girardi said. “I haven’t seen a ballpark where they put it behind you. You pay attention, of course.”</p>
                 <p>Whenever Girardi stole a glance, there was rarely any good news for the Yankees. While Girardi’s charges were clawing their way to a split of their four-game series against the formidable Indians, the Boston Red Sox were plowing past the rebuilding Chicago White Sox, sweeping four games at Fenway Park.</p>`,
       markdownContent: "## HEAD 2 \n markdown examples \n ``` welcome ```",
-      rawContent: '{"entityMap":{"0":{"type":"image","mutability":"IMMUTABLE","data":{"src":"https://image.qiluyidian.mobi/4305350813991067' +
-          '8747.jpg"}},"1":{"type":"image","mutability":"IMMUTABLE","data":{"src":"https://image.qiluyidian.mobi/430535081399106787' +
-          '47.jpg"}}},"blocks":[{"key":"fr2lj","text":"Yankees, Peeking at the Red Sox, Will Soon Get an Eyeful","type":"header-one","depth":0,"inlineStyleRanges":[],"entityRanges":[]' +
-          ',"data":{}},{"key":"90kdv","text":"Leaning over the railing from his perch on the top step of the first-base dugout this past weekend in Cleveland, Yankees Manager Joe Girardi did not have to divert his gaze to catch glimpses of the out-of-town scoreboard.","type":"unstyled","depth":0,"inlin' +
-          'eStyleRanges":[],"entityRanges":[],"data":{}},{"key":"b60ni","text":"Whenever Girardi stole a glance, there was rarely any good news for the Yankees. While Girardi’s charges were clawing their way to a split of their four-game series against the formidable Indians, the Boston Red Sox were plowing past the rebuilding Chicago White Sox, sweeping four games at Fenway Park.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"eui4h","text' +
-          '":"The Yankees, who trail the Red Sox by three games in the American League East, will have their rivals right in front of them on three of the next four weekends, beginning Friday night at Yankee Stadium.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],' +
-          '"data":{}},{"key":"29t6l","text":" ","type":"atomic","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":0,"lengt' +
-          'h":1,"key":0}],"data":{}},{"key":"7ujeo","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],' +
-          '"data":{}},{"key":"3n9d4","text":" ","type":"atomic","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":0,"lengt' +
-          'h":1,"key":1}],"data":{}},{"key":"9r0k2","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],' +
-          '"data":{}}]}',
+      rawContent:
+        '{"entityMap":{"0":{"type":"image","mutability":"IMMUTABLE","data":{"src":"https://image.qiluyidian.mobi/4305350813991067' +
+        '8747.jpg"}},"1":{"type":"image","mutability":"IMMUTABLE","data":{"src":"https://image.qiluyidian.mobi/430535081399106787' +
+        '47.jpg"}}},"blocks":[{"key":"fr2lj","text":"Yankees, Peeking at the Red Sox, Will Soon Get an Eyeful","type":"header-one","depth":0,"inlineStyleRanges":[],"entityRanges":[]' +
+        ',"data":{}},{"key":"90kdv","text":"Leaning over the railing from his perch on the top step of the first-base dugout this past weekend in Cleveland, Yankees Manager Joe Girardi did not have to divert his gaze to catch glimpses of the out-of-town scoreboard.","type":"unstyled","depth":0,"inlin' +
+        'eStyleRanges":[],"entityRanges":[],"data":{}},{"key":"b60ni","text":"Whenever Girardi stole a glance, there was rarely any good news for the Yankees. While Girardi’s charges were clawing their way to a split of their four-game series against the formidable Indians, the Boston Red Sox were plowing past the rebuilding Chicago White Sox, sweeping four games at Fenway Park.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"eui4h","text' +
+        '":"The Yankees, who trail the Red Sox by three games in the American League East, will have their rivals right in front of them on three of the next four weekends, beginning Friday night at Yankee Stadium.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],' +
+        '"data":{}},{"key":"29t6l","text":" ","type":"atomic","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":0,"lengt' +
+        'h":1,"key":0}],"data":{}},{"key":"7ujeo","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],' +
+        '"data":{}},{"key":"3n9d4","text":" ","type":"atomic","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":0,"lengt' +
+        'h":1,"key":1}],"data":{}},{"key":"9r0k2","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],' +
+        '"data":{}}]}',
       responseList: []
-    }
+    };
     this.receiveHtml = this.receiveHtml.bind(this);
     this.receiveMarkdown = this.receiveMarkdown.bind(this);
     this.receiveRaw = this.receiveRaw.bind(this);
@@ -56,7 +60,7 @@ class Test extends React.Component {
   receiveHtml(content) {
     console.log("recieved HTML content", content);
     //清空responseList
-    this.setState({responseList:[]});
+    this.setState({ responseList: [] });
   }
   componentDidMount() {}
   receiveMarkdown(content) {
@@ -67,12 +71,12 @@ class Test extends React.Component {
   }
   onChange(info) {
     let currFileList = info.fileList;
-    currFileList = currFileList.filter((f) => (!f.length));
+    currFileList = currFileList.filter(f => !f.length);
     let url = "http://devopee.b0.upaiyun.com";
 
     //Read remote address and display.
     //读取远程路径并显示链接
-    currFileList = currFileList.map((file) => {
+    currFileList = currFileList.map(file => {
       if (file.response) {
         // concat url
         // 组件会将 file.url 作为链接进行展示
@@ -86,10 +90,13 @@ class Test extends React.Component {
 
     // filtering successed files
     //按照服务器返回信息筛选成功上传的文件
-    currFileList = currFileList.filter((file) => {
+    currFileList = currFileList.filter(file => {
       //multiple uploading?
       //根据多选选项更新添加内容
-      let hasNoExistCurrFileInUploadedList = !~findIndex(_this.state.responseList, item => item.name === file.name)
+      let hasNoExistCurrFileInUploadedList = !~findIndex(
+        _this.state.responseList,
+        item => item.name === file.name
+      );
       if (hasNoExistCurrFileInUploadedList) {
         if (!!_this.props.isMultiple == true) {
           _this.state.responseList.push(file);
@@ -97,11 +104,15 @@ class Test extends React.Component {
           _this.state.responseList = [file];
         }
       }
-      return !!file.response || (!!file.url && file.status == "done") || file.status == "uploading";
+      return (
+        !!file.response ||
+        (!!file.url && file.status == "done") ||
+        file.status == "uploading"
+      );
     });
     currFileList = uniqBy(currFileList, "name");
     if (!!currFileList && currFileList.length != 0) {
-      this.setState({responseList: currFileList});
+      this.setState({ responseList: currFileList });
     }
     _this.forceUpdate();
   }
@@ -110,19 +121,24 @@ class Test extends React.Component {
   }
   getSignature(fileName) {
     let now = new Date();
-    let h = hmacsha1('19931944122b23f77681b6ab765648f8', 'POST&/upyun-temp/' + fileName + '&' + now);
+    let h = hmacsha1(
+      "19931944122b23f77681b6ab765648f8",
+      "POST&/upyun-temp/" + fileName + "&" + now
+    );
     let Signature = Base64.encode(h);
     return Signature;
   }
   getPolicy(fileName) {
     let now = new Date();
     let afterHour = new Date(now.getTime() + 1 * 60 * 60 * 1000); //expiration date time
-    let policy = Base64.encode(JSON.stringify({
-      "bucket": "devopee",
-      "save-key": "/" + fileName,
-      "expiration": Math.round(afterHour.getTime() / 1000),
-      "date": now
-    }));
+    let policy = Base64.encode(
+      JSON.stringify({
+        bucket: "devopee",
+        "save-key": "/" + fileName,
+        expiration: Math.round(afterHour.getTime() / 1000),
+        date: now
+      })
+    );
     return policy;
   }
   render() {
@@ -133,9 +149,9 @@ class Test extends React.Component {
     const uploadProps = {
       action: "http://v0.api.upyun.com/devopee",
       onChange: this.onChange,
-      listType: 'picture',
+      listType: "picture",
       fileList: this.state.responseList,
-      data: (file) => {
+      data: file => {
         // customize uploading parameters, code example use UPYUN(https://www.upyun.com/)
         //自定义上传参数，这里使用UPYUN
         return {
@@ -144,33 +160,50 @@ class Test extends React.Component {
             policy = this.getPolicy(file.name);
             return policy;
           })(),
-          signature: md5(policy + '&pLv/J4I6vfpeznxtwU+g/dsUcEY=')
-        }
+          signature: md5(policy + "&pLv/J4I6vfpeznxtwU+g/dsUcEY=")
+        };
       },
       multiple: true,
       beforeUpload: this.beforeUpload,
       showUploadList: true
-    }
-    let watermarkImage=[
+    };
+    let watermarkImage = [
       {
         type: "white_small",
         tip: "white small",
         value: "http://7xjl1j.com1.z0.glb.clouddn.com/white_small.png",
-        valuebase64: "aHR0cDovLzd4amwxai5jb20xLnowLmdsYi5jbG91ZGRuLmNvbS93aGl0ZV9zbWFsbC5wbmc="
-      }, {
+        valuebase64:
+          "aHR0cDovLzd4amwxai5jb20xLnowLmdsYi5jbG91ZGRuLmNvbS93aGl0ZV9zbWFsbC5wbmc="
+      },
+      {
         type: "white_big",
         tip: "white big",
         value: "http://7xjl1j.com1.z0.glb.clouddn.com/white_big.png",
-        valuebase64: "aHR0cDovLzd4amwxai5jb20xLnowLmdsYi5jbG91ZGRuLmNvbS93aGl0ZV9iaWcucG5n"
+        valuebase64:
+          "aHR0cDovLzd4amwxai5jb20xLnowLmdsYi5jbG91ZGRuLmNvbS93aGl0ZV9iaWcucG5n"
       }
-    ]
+    ];
     return (
       <div>
-        <div>Editor demo 1 (use default html format ):
+        <div>Editor demo 0: Entropy version</div>
+        <div
+          style={{
+            width: "640px",
+            margin: "auto"
+          }}
+        >
+          <LzEditor active={true} cbReceiver={this.receiveHtml} />
         </div>
-        <LzEditor active={true} importContent={this.state.htmlContent} cbReceiver={this.receiveHtml} uploadProps={uploadProps}/>
-        <br/>
-        <br/>
+        {/* <br />
+        <br />
+        <div>Editor demo 1 (use default html format ):</div>
+        <LzEditor
+          active={true}
+          importContent={this.state.htmlContent}
+          cbReceiver={this.receiveHtml}
+          uploadProps={uploadProps}
+        /> */}
+        {/*
         <div>Editor demo 2 (use markdown format ):
         </div>
         <LzEditor
@@ -193,11 +226,10 @@ class Test extends React.Component {
           video={false}
           audio={false}
           convertFormat="raw"
-          lang="zh-CN"/>
+          lang="zh-CN"/> */}
       </div>
     );
   }
 }
 
-ReactDOM.render(
-  <Test/>, document.getElementById('test'));
+ReactDOM.render(<Test />, document.getElementById("test"));
