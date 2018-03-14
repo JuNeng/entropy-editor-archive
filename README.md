@@ -13,13 +13,14 @@ yarn && yarn dev
 
 git checkout -b [dev_name]/[feature_branch]
 
-// After you finish your development, you open a PR. Get approval and then merge into master.
-// The admin run the following command to publish it (IT IS A MUST! 
+// Go to localhost:8080. Enjoy coding!
+
+// Once you finish your development ,run the following command to publish it (IT IS A MUST!
 // Otherwise, our front-end repo wouldn't be able to access the code.)
 
-git checkout master && yarn publish
+yarn run publish
 
-// Go to localhost:8080. Enjoy coding!
+// Then you can commit your code and ask for code review.
 ```
 [![npm license](https://img.shields.io/npm/l/awesome-badges.svg)](https://www.npmjs.org/package/awesome-badges)
 
