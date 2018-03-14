@@ -1,0 +1,605 @@
+.openFullAll {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  overflow: auto;
+}
+.watermark_grid {
+  display: block;
+  position: absolute;
+  top: 0;
+  background-repeat: no-repeat;
+}
+.watermark_grid span {
+  display: inline-block;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+.editor-inline-image tips {
+  font-size: 12px;
+  position: absolute;
+  right: 0;
+  color: #aaa;
+}
+.uploadingImagies {
+  text-align: center;
+}
+.uploadingImagies img {
+  max-width: 100%;
+}
+.uploadingImagies a {
+  font-size: 20px;
+  position: relative;
+  display: inherit;
+  margin: 0 auto;
+}
+.breakImages > div {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  background-clip: content-box;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #e9e9e9;
+  border-radius: 3px;
+  overflow: hidden;
+}
+@font-face {
+  font-family: "anticon";
+  src: url("default/iconfont.eot");
+  /* IE9*/
+  src: url("default/iconfont.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("default/iconfont.woff") format("woff"),
+    /* chrome、firefox */ url("default/iconfont.ttf") format("truetype"),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url("default/iconfont.svg#iconfont") format("svg");
+  /* iOS 4.1- */
+}
+.anticon {
+  display: inline-block;
+  font-style: normal;
+  vertical-align: baseline;
+  text-align: center;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+}
+.anticon:before {
+  display: block;
+  font-family: "anticon" !important;
+}
+.anticon-circles:before {
+  content: "\e991";
+}
+.anticon-circle:before {
+  content: "\e992";
+}
+.anticon-post:before {
+  content: "\e995";
+}
+.anticon-result:before {
+  content: "\e994";
+}
+.anticon-comment:before {
+  content: "\e996";
+}
+.anticon-offline:before {
+  content: "\e997";
+}
+.anticon-goods:before {
+  content: "\e998";
+}
+.anticon-action:before {
+  content: "\e999";
+}
+.anticon-shop:before {
+  content: "\ea01";
+}
+.anticon-brand:before {
+  content: "\ea02";
+}
+.anticon-serial:before {
+  content: "\ea03";
+}
+.anticon-discover-post:before {
+  content: "\ea04";
+}
+.anticon-refine-post:before {
+  content: "\ea05";
+}
+.anticon-gallery:before {
+  content: "\ea06";
+}
+.anticon-userinfo:before {
+  content: "\ea07";
+}
+.anticon-log:before {
+  content: "\ea08";
+}
+.anticon-password:before {
+  content: "\ea09";
+}
+.anticon-order:before {
+  content: "\ea10";
+}
+.anticon-remove:before {
+  content: "\ea0a";
+}
+.anticon-dropdown:before {
+  content: "\ea0b";
+}
+.anticon-sort:before {
+  content: "\ea0c";
+}
+.anticon-panorama_time:before {
+  content: "\ea16";
+}
+.anticon-panorama_joinuser:before {
+  content: "\ea18";
+}
+.anticon-panorama_joindevice:before {
+  content: "\ea19";
+}
+.anticon-panorama_app:before {
+  content: "\ea1a";
+}
+.anticon-panorama_today:before {
+  content: "\ea12";
+}
+.anticon-panorama_version:before {
+  content: "\ea14";
+}
+.anticon-panorama_newboot:before {
+  content: "\ea13";
+}
+.anticon-panorama:before {
+  content: "\ea15";
+}
+.anticon-panorama_device:before {
+  content: "\ea17";
+}
+.anticon-panorama_action:before {
+  content: "\ea11";
+}
+.anticon-jiangpai:before {
+  content: "\ea1b";
+}
+.anticon-system:before {
+  content: "\ea1c";
+}
+.anticon-permission:before {
+  content: "\ea1d";
+}
+.anticon-permission_actions:before {
+  content: "\ea20";
+}
+.anticon-permission_set:before {
+  content: "\ea1e";
+}
+.anticon-permission_add:before {
+  content: "\ea22";
+}
+.anticon-permission_mine:before {
+  content: "\ea1f";
+}
+.anticon-dev:before {
+  content: "\ea21";
+}
+.anticon-dev_app:before {
+  content: "\ea23";
+}
+.anticon-news:before {
+  content: "\ea2a";
+}
+.anticon-news_channel:before {
+  content: "\ea27";
+}
+.anticon-news_comment:before {
+  content: "\ea29";
+}
+.anticon-news_verify:before {
+  content: "\ea26";
+}
+.anticon-news_city:before {
+  content: "\ea25";
+}
+.anticon-news_recycle:before {
+  content: "\ea24";
+}
+.anticon-news_draft:before {
+  content: "\ea2b";
+}
+.anticon-news_grab:before {
+  content: "\ea2c";
+}
+.anticon-biguser:before {
+  content: "\ea2d";
+}
+.anticon-biguser_type:before {
+  content: "\ea2e";
+}
+.anticon-biguser_item:before {
+  content: "\ea2f";
+}
+.anticon-biguser_article:before {
+  content: "\ea30";
+}
+.anticon-biguser_verify:before {
+  content: "\ea31";
+}
+.anticon-news_gallery:before {
+  content: "\ea39";
+}
+.anticon-permission_add:before {
+  content: "\ea35";
+}
+.anticon-permission_mine:before {
+  content: "\ea32";
+}
+.anticon-permission_department:before {
+  content: "\ea37";
+}
+.anticon-permission_user:before {
+  content: "\ea36";
+}
+.anticon-channel_management:before {
+  content: "\ea33";
+}
+.anticon-user_update:before {
+  content: "\ea38";
+}
+.anticon-app_client:before {
+  content: "\ea40";
+}
+.anticon-start_page:before {
+  content: "\ea41";
+}
+.anticon-hot_word:before {
+  content: "\ea42";
+}
+.anticon-sensitive_word:before {
+  content: "\ea43";
+}
+.anticon-appuser_score:before {
+  content: "\ea44";
+}
+.anticon-panorama_tap:before {
+  content: "\ea45";
+}
+.anticon-appuser:before {
+  content: "\ea46";
+}
+.anticon-panorama_news:before {
+  content: "\ea47";
+}
+.anticon-update_password:before {
+  content: "\ea48";
+}
+.anticon-editor_undo:before {
+  content: "\eb01";
+}
+.anticon-editor_redo:before {
+  content: "\eb02";
+}
+.anticon-editor_empty_style:before {
+  content: "\eb03";
+}
+.anticon-editor_paset_text:before {
+  content: "\eb04";
+}
+.anticon-editor_H1:before {
+  content: "\eb05";
+}
+.anticon-editor_H2:before {
+  content: "\eb06";
+}
+.anticon-editor_H3:before {
+  content: "\eb07";
+}
+.anticon-editor_H4:before {
+  content: "\eb08";
+}
+.anticon-editor_refs:before {
+  content: "\eb09";
+}
+.anticon-editor_ul:before {
+  content: "\eb10";
+}
+.anticon-editor_ol:before {
+  content: "\eb11";
+}
+.anticon-editor_pre:before {
+  content: "\eb12";
+}
+.anticon-editor_b:before {
+  content: "\eb13";
+}
+.anticon-editor_i:before {
+  content: "\eb14";
+}
+.anticon-editor_u:before {
+  content: "\eb15";
+}
+.anticon-editor_e:before {
+  content: "\eb16";
+}
+.anticon-editor_image_masker:before {
+  content: "\eb17";
+}
+.anticon-editor_image:before {
+  content: "\eb18";
+}
+.anticon-editor_video:before {
+  content: "\eb19";
+}
+.anticon-editor_audio:before {
+  content: "\eb20";
+}
+.anticon-editor_link:before {
+  content: "\eb21";
+}
+.anticon-editor_unlink:before {
+  content: "\eb22";
+}
+.anticon-editor_safty:before {
+  content: "\eb23";
+}
+.anticon-editor_full_screen:before {
+  content: "\eb24";
+}
+.anticon-news_radar:before {
+  content: "\ea49";
+}
+.anticon-news_radar_list:before {
+  content: "\ea50";
+}
+.anticon-news_radar_comment:before {
+  content: "\ea51";
+}
+.anticon-news_fast_push:before {
+  content: "\ea52";
+}
+.anticon-editor_alignment_justify:before {
+  content: "\ea53";
+}
+.anticon-editor_alignment_left:before {
+  content: "\ea54";
+}
+.anticon-editor_alignment_right:before {
+  content: "\ea55";
+}
+.anticon-editor_alignment_center:before {
+  content: "\ea56";
+}
+.anticon-editor_alignment_center:before {
+  content: "\ea56";
+}
+.anticon-editor_select_block:before {
+  content: "\eaa2";
+}
+.editorHidden {
+  z-index: 10;
+  overflow: hidden;
+  position: relative;
+}
+.editor_container {
+  border: 1px solid #e9e9e9;
+  background-color: #f9f9f9;
+  padding: 5px;
+}
+.editor_top {
+  height: 30px;
+  width: 100%;
+}
+.editor_middle {
+  background-color: #fff;
+  border: 1px solid #e9e9e9;
+  box-shadow: 3px 3px 5px #aaa inset;
+}
+.editor_bottom {
+  height: 30px;
+  width: 100%;
+}
+.superFancyBlockquote {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+}
+/*.public-DraftEditor-content>div>div>div>div:before{content:"¶"}*/
+.editor-inline-image img,
+.editor-inline-video video,
+.editor-inline-audio audio {
+  padding: 0 5px;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+.RichEditor-root {
+  background: #fff;
+  border: 1px solid #e9edef;
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 24px;
+}
+.RichEditor-editor {
+  cursor: text;
+  font-size: 16px;
+}
+.RichEditor-editor .public-DraftEditorPlaceholder-root,
+.RichEditor-editor .public-DraftEditor-content {
+  margin: 0 -15px -15px;
+  padding: 15px;
+}
+.RichEditor-editor .public-DraftEditor-content {
+  min-height: 400px;
+  line-height: initial;
+}
+.RichEditor-editor .public-DraftEditor-content > div > * {
+  margin: 10px 0;
+}
+.RichEditor-editor .public-DraftEditor-content pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.RichEditor-editor .RichEditor-blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-style: italic;
+  margin: 16px 0;
+  padding: 10px 20px;
+}
+.RichEditor-editor .RichEditor-alignment-left {
+  text-align: left;
+}
+.RichEditor-editor .RichEditor-alignment-center {
+  text-align: center;
+}
+.RichEditor-editor .RichEditor-alignment-right {
+  text-align: right;
+}
+.RichEditor-editor .RichEditor-alignment-justify {
+  text-align: justify;
+}
+.RichEditor-editor .public-DraftStyleDefault-pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  padding: 20px;
+}
+.public-DraftStyleDefault-ul {
+  list-style: disc;
+  padding-left: 2rem;
+}
+.public-DraftStyleDefault-ol {
+  padding-left: 2rem;
+  list-style-type: decimal;
+}
+.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+.RichEditor-controls {
+  font-size: 14px;
+  user-select: none;
+}
+.RichEditor-controls .ant-btn {
+  transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  -moz-transition: none !important;
+  -webkit-transition: none !important;
+}
+.RichEditor-controls-container {
+  display: flex;
+}
+.RichEditor-controls-split {
+  padding-right: 20px;
+}
+.RichEditor-styleButton {
+  color: #7d7f8e;
+  cursor: pointer;
+  padding: 3px 5px !important;
+  display: inline-block;
+  position: relative;
+  margin: 8px 5px;
+  line-height: 1.5;
+  font-size: 16px;
+  border: 1px solid transparent;
+}
+.RichEditor-styleButton.ant-btn.ant-btn-primary.ant-btn-icon-only {
+  color: #fff;
+}
+.RichEditor-styleButton i.anticon {
+  margin-left: 0px !important;
+}
+.RichEditor-activeButton {
+  color: #fff;
+  border-radius: 5px;
+  /*Can not use the default color, otherwise it will replace the custom theme color*/
+}
+.RichEditor-color {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  overflow: hidden;
+  top: 3px;
+  position: relative;
+  border-radius: 3px;
+  margin: 0px 5px;
+}
+.RichEditor-color span {
+  margin: 0;
+  width: 16px;
+  line-height: 28px;
+}
+#text-editor-affix > .ant-affix {
+  background-color: #fff !important;
+}
+.root {
+  background-repeat: no-repeat;
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer;
+}
+.resize {
+  border: 1px dashed #78a300;
+  position: relative;
+  max-width: 100%;
+  display: inline-block;
+  line-height: 0;
+  top: -1px;
+  left: -1px;
+}
+.resizeHandle {
+  cursor: nwse-resize;
+  position: absolute;
+  z-index: 2;
+  line-height: 1;
+  bottom: -4px;
+  right: -5px;
+  border: 1px solid white;
+  background-color: #78a300;
+  width: 8px;
+  height: 8px;
+}
+figure {
+  text-align: center;
+  overflow: hidden;
+}
+figure video {
+  max-width: 300px;
+  min-width: 300px;
+  max-height: 200px;
+  min-height: 200px;
+}
+figure img,
+figure video,
+figure audio {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+.editor-inline-image,
+.editor-inline-video,
+.editor-inline-audio {
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer;
+  width: 100% !important;
+}
+.editor-inline-image:hover,
+.editor-inline-video:hover,
+.editor-inline-audio:hover {
+  background-color: #f7f7f7;
+}
+.editor-inline-image span,
+.editor-inline-video span,
+.editor-inline-audio span {
+  font-size: 100px;
+  /*color: rgba(0, 0, 0, 0);*/
+  position: absolute;
+  left: -10px;
+}

@@ -13,7 +13,8 @@
       "webpack-dev-server --devtool eval --progress --colors --hot --content-base build",
     "release":
       "webpack -p --progress --colors --config webpack.release.config.js",
-    "publish": "babel -d publish/ src/ --no-comments"
+    "publish":
+      "babel -d publish/ src/ --no-comments && lessc src/editor/styles/index.less publish/editor/styles/index.less"
   },
   "lint-staged": {
     "*.{js,jsx,json,less,css,md}": ["prettier --write", "git add"]
