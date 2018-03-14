@@ -20,6 +20,7 @@ git checkout -b [dev_name]/[feature_branch]
 // Otherwise, our front-end repo wouldn't be able to access the code.)
 
 yarn run build
+yarn run publish
 
 // Then you can commit your code and ask for code review.
 ```
