@@ -1,2 +1,2 @@
-module.exports = require("./publish/index");
-exports.LzEditor = require("./publish/index");
+module.exports = require("./build/bundle");
+exports.LzEditor = require("./build/bundle");

@@ -19,7 +19,7 @@ git checkout -b [dev_name]/[feature_branch]
 // Once you finish your development ,run the following command to publish it (IT IS A MUST!
 // Otherwise, our front-end repo wouldn't be able to access the code.)
 
-yarn run publish
+yarn run build
 
 // Then you can commit your code and ask for code review.
 ```
