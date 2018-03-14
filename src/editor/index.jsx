@@ -32,7 +32,6 @@ import {
   Form,
   Input,
   message,
-  // Affix,
   Icon
 } from "antd";
 import { stateToHTML, stateFromHTML, stateToMD, stateFromMD } from "./utils";
@@ -75,7 +74,7 @@ class EditorConcist extends React.Component {
     super(props);
 
     this.state = {
-      openFullTest: "",
+      openFullText: "",
       showSourceEditor: "",
       showURLInput: false,
       urlValue: "",
@@ -99,7 +98,6 @@ class EditorConcist extends React.Component {
           if (ConvertFormatProps === "html") {
             contentState = stateFromHTML(originalString);
           } else if (ConvertFormatProps === "markdown") {
-            // console.log("markdown originalString",originalString)
             contentState = stateFromMD(originalString);
           } else if (ConvertFormatProps === "raw") {
             originalString = originalString.replace(/\s/g, "")
@@ -123,10 +121,8 @@ class EditorConcist extends React.Component {
         clearTimeout(that.timer);
       }
       that.timer = setTimeout(function() {
-        //convert state to object.
         let rawContentState = that.state.editorState.getCurrentContent();
-        //const rawContent = convertToRaw(rawContentState);
-        // console.log('rawContentState', rawContentState);
+
         let content;
         const ConvertFormatProps = that.props.convertFormat;
         if (ConvertFormatProps === "html") {
@@ -139,7 +135,6 @@ class EditorConcist extends React.Component {
         }
         that.props.cbReceiver(content);
         //NOTE: When you set 'active' as 'true' in the editor, DO NOT use 'this.forceUpdate();', or you could not have able to select the text in editor probably.
-        //富文本编辑器在设置active是true时，不可使用forceUpdate，否则会造成无法选中文本的问题！
       }, 300);
     };
 
@@ -153,7 +148,6 @@ class EditorConcist extends React.Component {
     /*VIDEO/AUDIO/IMAGE*/
     this.logState = () => {
       const content = this.state.editorState.getCurrentContent();
-      //  console.log(convertToRaw(content));
     };
 
     this.addMedia = this._addMedia.bind(this);
@@ -196,28 +190,19 @@ class EditorConcist extends React.Component {
     language = language || "en";
     this.setState({
       language,
-      openFullTest: lang[language].fullScreen,
+      openFullText: <Icon type="arrows-alt" />,
       showSourceEditor: lang[language].sourceCode
     });
 
     let content = this.props.importContent;
-    // const decorator = new CompositeDecorator([
-    //   LinkDecorator,
-    //   ImageDecorator
-    // ]);
+
     const contentState = stateFromHTML(content);
-    //  console.log("componentDidMount content",content);
-    //  console.log("componentDidMount contentState",JSON.stringify(contentState));
-    // let values = EditorState.createWithContent(contentState, decorator);
-    // this.state.editorState = values;
     this.state.autoSaveFun = setInterval(() => {
       // Automaticly save text to draft-box every minute.
-      //每分钟自动保存草稿一次
       this.handleKeyCommand("editor-save");
     }, 60000);
   }
   // This hook function will be called while you edit text in editor.
-  // 此钩子用作编辑时候的回调
   componentWillReceiveProps(newProps) {
     if (!newProps.active) {
       return false;
@@ -227,7 +212,6 @@ class EditorConcist extends React.Component {
     }
     const ConvertFormatProps = this.props.convertFormat;
     let newContent = "";
-    // console.log("ConvertFormatProps",ConvertFormatProps)
     if (ConvertFormatProps === "html") {
       newContent = newProps.importContent.replace(
         /[\s\xA0\u1680\u180E\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]\>/g,
@@ -242,13 +226,7 @@ class EditorConcist extends React.Component {
     } else if (ConvertFormatProps === "raw") {
       newContent = newProps.importContent || "{}";
     }
-    /*const decorator = new CompositeDecorator([
-      LinkDecorator,
-      ImageDecorator,
-      VideoDecorator,
-      AudioDecorator
-    ]);*/
-    // console.log("newContent",newContent)
+
     let contentState;
     if (ConvertFormatProps === "html") {
       contentState = stateFromHTML(newContent);
@@ -258,14 +236,11 @@ class EditorConcist extends React.Component {
       let rawContent = JSON.parse(newContent);
       contentState = convertFromRaw(rawContent);
     }
-    // console.log("contentState",contentState)
-    // console.log("componentWillReceiveProps newContent",newContent);
-    // console.log("componentWillReceiveProps contentState",JSON.stringify(contentState));
+
     let values = EditorState.createWithContent(contentState, decorator);
     this.state.editorState = values;
   }
   componentWillUnmount() {
-    // console.log("componentWillUnmount! this.state.autoSaveFun",this.state.autoSaveFun);
     clearInterval(this.state.autoSaveFun);
   }
   handleOk() {
@@ -296,7 +271,6 @@ class EditorConcist extends React.Component {
   }
 
   _confirmLink(e) {
-    // console.log("_confirmLink urlValue", urlValue)
     const { editorState, urlValue } = this.state;
     const entityKey = Entity.create("LINK", "MUTABLE", { url: urlValue });
     this.onChange(
@@ -337,12 +311,12 @@ class EditorConcist extends React.Component {
     if (ele.classList.contains("openFullAll")) {
       ele.className = ele.className.replace("openFullAll", "");
       this.setState({
-        openFullTest: lang[this.state.language].fullScreen
+        openFullText: <Icon type="arrows-alt" />
       });
     } else {
       ele.className += " openFullAll";
       this.setState({
-        openFullTest: lang[this.state.language].quitFullScreen
+        openFullText: <Icon type="shrink" />
       });
     }
   }
@@ -374,13 +348,9 @@ class EditorConcist extends React.Component {
   }
 
   _handleKeyCommand(command) {
-    // console.log("command",command);
     const { editorState } = this.state;
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (command === "editor-save" && this.props.autoSave == true) {
-      // window.localDB//start20Text
-      // let Data=PRO_COMMON.localDB.getter("grab_news_data") || [];
-
       let rawContentState = editorState.getCurrentContent();
       let content = "",
         newText = "";
@@ -423,7 +393,6 @@ class EditorConcist extends React.Component {
   _solidHtml(html) {
     // html=html.replace(/"((?:\\.|[^"\\])*)"/g,"");
     //Remove all content in quote. e.g. style="" class=""
-    //去掉所有英文单引号里面的内容，比如 style="" class=""
     let walk_the_DOM = function walk(node, func) {
       func(node);
       node = node.firstChild;
@@ -445,10 +414,8 @@ class EditorConcist extends React.Component {
   }
   _handlePastedText(text, sourceString) {
     sourceString = this.solidHtml(sourceString);
-    // console.log("_handlePastedText text",text);
-    // console.log("_handlePastedText sourceString",typeof(sourceString),sourceString);
+
     if (text == "undefined" && sourceString == "undefined") {
-      // console.log("_handlePastedText return false");
       return false;
     }
     if (sourceString == "undefined" || !sourceString) {
@@ -504,7 +471,6 @@ class EditorConcist extends React.Component {
     this.forceUpdate();
     return true;
     //Override the default paste behavior of the editor
-    //覆盖编辑器的默认粘贴行为
   }
 
   _toggleBlockType(blockType) {
@@ -512,18 +478,6 @@ class EditorConcist extends React.Component {
   }
 
   _toggleAlignment(alignment) {
-    //This method only supports the data type like:
-    //这种方式仅支持的数据类型:
-    // https://github.com/facebook/draft-js/blob/master/src/model/constants/DraftBlockType.js
-
-    // const {editorState} = this.state;
-    // const selection = editorState.getSelection();
-    // const contentState = editorState.getCurrentContent();
-    // const alignBlock = Modifier.setBlockType(contentState, selection, alignment)
-    // this.setState({
-    //   editorState: EditorState.push(editorState, alignBlock)
-    // })
-
     // right way:
     this.onChange(
       ExtendedRichUtils.toggleAlignment(this.state.editorState, alignment)
@@ -564,11 +518,10 @@ class EditorConcist extends React.Component {
 
   _addImage(Objects) {
     let that = this;
-    // console.log("Objects Objects", Objects);
     Objects.map((item, i) => {
       setTimeout(() => {
         let imageObj = that.addMedia("image", item);
-        // console.log("imageObj",imageObj,JSON.stringify(imageObj));
+
         return that.onChange(imageObj);
       }, i * 100);
     });
@@ -605,8 +558,7 @@ class EditorConcist extends React.Component {
     } else if (ConvertFormatProps === "raw") {
       contentState = convertFromRaw(sourceString);
     }
-    // console.log("_pasteNoStyle sourceString",sourceString);
-    // console.log("_pasteNoStyle contentState",JSON.stringify(contentState));
+
     let values = EditorState.createWithContent(contentState, decorator);
     this.state.editorState = values;
     this.forceUpdate();
@@ -745,17 +697,22 @@ class EditorConcist extends React.Component {
         className += " RichEditor-hidePlaceholder";
       }
     }
-    // console.log("this.props.undoRedo",this.props.undoRedo)//https://gist.github.com/deanmcpherson/69f9962b744b273ffb64fe294ab71bc4
 
-    // <Affix offsetTop={0} id="text-editor-affix">
-    // </Affix>
     return (
       <div
         className="RichEditor-root editorHidden"
         content={this.state.HTML}
         id="text-editor-container"
       >
-        <div>
+        <div className="RichEditor-controls-container">
+          {this.state.showMarkdownSource == false &&
+            this.props.inlineStyle && (
+              <InlineStyleControls
+                editorState={editorState}
+                onToggle={this.toggleInlineStyle}
+                lang={lang[this.state.language]}
+              />
+            )}
           {this.state.showMarkdownSource == false &&
             this.props.undoRedo && (
               <UndoRedo
@@ -793,19 +750,19 @@ class EditorConcist extends React.Component {
                 lang={lang[this.state.language]}
               />
             )}
-          {this.state.showMarkdownSource == false &&
-            this.props.inlineStyle && (
-              <InlineStyleControls
-                editorState={editorState}
-                onToggle={this.toggleInlineStyle}
-                lang={lang[this.state.language]}
-              />
-            )}
           {this.props.color &&
             this.props.convertFormat !== "markdown" && (
               <ColorControls
                 editorState={editorState}
                 onToggle={this.toggleColor}
+                lang={lang[this.state.language]}
+              />
+            )}
+          {this.state.showMarkdownSource == false &&
+            this.props.urls && (
+              <AddUrl
+                editorState={editorState}
+                onToggle={this.promptForLink}
                 lang={lang[this.state.language]}
               />
             )}
@@ -837,22 +794,14 @@ class EditorConcist extends React.Component {
                 uploadProps={this.props.uploadProps}
               />
             )}
-          {this.state.showMarkdownSource == false &&
-            this.props.urls && (
-              <AddUrl
-                editorState={editorState}
-                onToggle={this.promptForLink}
-                lang={lang[this.state.language]}
-              />
-            )}
-          {this.state.showMarkdownSource == false &&
+          {/* {this.state.showMarkdownSource == false &&
             this.props.urls && (
               <CloseUrl
                 editorState={editorState}
                 onToggle={this.removeLink}
                 lang={lang[this.state.language]}
               />
-            )}
+            )} */}
           {this.state.showMarkdownSource == false &&
             this.props.autoSave && (
               <AutoSaveControls
@@ -864,7 +813,7 @@ class EditorConcist extends React.Component {
             <OpenFull
               editorState={editorState}
               onToggle={this.openFull}
-              coverTitle={this.state.openFullTest}
+              coverTitle={this.state.openFullText}
               lang={lang[this.state.language]}
             />
           )}
@@ -930,18 +879,16 @@ const styleMap = {
 };
 
 function getBlockStyle(block) {
-  // console.log("getBlockStyle block",block,JSON.stringify(block))
   let type = block.getType();
   let data = block.getData();
   let text = block.getText();
-  // console.log("getBlockStyle get data",JSON.stringify(data))
   let mergedStyle = "";
   switch (type) {
     case "blockquote":
       mergedStyle = "RichEditor-blockquote";
       break;
   }
-  // console.log("getBlockStyle mergingStyle",mergedStyle)
+
   if (!data.has("textAlignment")) {
     return mergedStyle;
   }
@@ -959,14 +906,12 @@ function getBlockStyle(block) {
       mergedStyle += " RichEditor-alignment-justify";
       break;
   }
-  // console.log("getBlockStyle mergedStyle",mergedStyle)
+
   return mergedStyle;
 }
 
 function mediaBlockRenderer(block) {
-  // console.log("block",block); console.log("1111111block.getType() ",block.getType());
   if (block.getType() === "atomic") {
-    // console.log("11112222block.getType() ",block.getType());
     return { component: Media, editable: false };
   }
 
@@ -978,7 +923,6 @@ const Audio = props => {
 };
 
 const Image = props => {
-  //   console.log("props",props.src);
   return <img src={props.src} className="media" />;
 };
 
@@ -990,8 +934,7 @@ const Media = props => {
   const entity = Entity.get(props.block.getEntityAt(0));
   const { src } = entity.getData();
   const type = entity.getType();
-  // console.log("Media type",src);
-  // console.log("Media entity",type);
+
   let media;
   if (type === "audio") {
     media = <Audio src={src} />;

@@ -1,41 +1,39 @@
 /* @flow */
 
 // import autobind from 'class-autobind';
-import React, {Component} from 'react';
-import ReactDom from 'react-dom';
-import {Entity,EditorState} from 'draft-js';
-import {message} from 'antd';
+import React, { Component } from "react";
+import ReactDom from "react-dom";
+import { Entity, EditorState } from "draft-js";
+import { message } from "antd";
 
 // $FlowIssue - Flow doesn't understand CSS Modules
-import styles from './decoratorStyle.css';
+import styles from "./decoratorStyle.css";
 
 export default class ImageSpan extends Component {
-  constructor(props : Props) {
+  constructor(props: Props) {
     super(props);
-    // autobind(this);
     const entity = Entity.get(this.props.entityKey);
-    const {width, height} = entity.getData();
+    const { width, height } = entity.getData();
     this.state = {
       width,
       height,
-      imageSrc:''
+      imageSrc: ""
     };
-    this.onImageClick=this._onImageClick.bind(this);
-    this.onDoubleClick=this._onDoubleClick.bind(this);
+    this.onImageClick = this._onImageClick.bind(this);
+    this.onDoubleClick = this._onDoubleClick.bind(this);
   }
 
   componentDidMount() {
-    const {width, height} = this.state;
+    const { width, height } = this.state;
     const entity = Entity.get(this.props.entityKey);
     const image = new Image();
-    let {src} = entity.getData();
-    src=src.replace(/[?#&].*$/g,"");
-    this.setState({imageSrc:src});
+    let { src } = entity.getData();
+    src = src.replace(/[?#&].*$/g, "");
+    this.setState({ imageSrc: src });
     image.src = this.state.imageSrc;
     image.onload = () => {
       if (width == null || height == null) {
-        // TODO: isMounted?
-        this.setState({width: image.width, height: image.height});
+        this.setState({ width: image.width, height: image.height });
         Entity.mergeData(this.props.entityKey, {
           width: image.width,
           height: image.height,
@@ -47,15 +45,12 @@ export default class ImageSpan extends Component {
   }
 
   render() {
-    const {width, height} = this.state;
-    //let {className} = this.props;
-    let key=this.props.entityKey;
+    const { width, height } = this.state;
+    let key = this.props.entityKey;
     const entity = Entity.get(key);
-    const {src} = entity.getData();
-    // this.setState({imageSrc:src});
-    //console.log("styles.root: ", styles.root); className = cx(className, styles.root);
+    const { src } = entity.getData();
     const imageStyle = {
-      verticalAlign: 'bottom',
+      verticalAlign: "bottom",
       backgroundImage: `url("${this.state.imageSrc}")`,
       backgroundSize: `${width}px ${height}px`,
       lineHeight: `${height}px`,
@@ -65,57 +60,53 @@ export default class ImageSpan extends Component {
       letterSpacing: width
     };
 
-    //   return (       <span           className="editor-inline-image"           style={imageStyle}
-    // onClick={this._onClick}           >   {this.props.children} </span>   );
-    //<tips> {imageStyle.width&&imageStyle.height?`Width ${imageStyle.width}px Height ${imageStyle.height}px`:""}</tips>
     return (
       <div className="editor-inline-image" onClick={this._onClick}>
-        <img src={`${this.state.imageSrc}`} className="media-image" onClick={(event)=>{this.onImageClick(event,key);event.stopPropagation();}} onDoubleClick={this.onDoubleClick}/>
+        <img
+          src={`${this.state.imageSrc}`}
+          className="media-image"
+          onClick={event => {
+            this.onImageClick(event, key);
+            event.stopPropagation();
+          }}
+          onDoubleClick={this.onDoubleClick}
+        />
       </div>
     );
   }
 
   _onDoubleClick() {
     //Popup a modal to edit
-    let currentPicture=ReactDom.findDOMNode(this).querySelector("img");
-    let pictureWidth=currentPicture.naturalWidth;
-    let pictureSrc=currentPicture.src;
-      // console.log("pictureSrc",pictureSrc);
-      // currentPicture.src="http://www.cbinews.com/article/image/20161027/20161027091805_674.png"
+    let currentPicture = ReactDom.findDOMNode(this).querySelector("img");
+    let pictureWidth = currentPicture.naturalWidth;
+    let pictureSrc = currentPicture.src;
   }
-  _onImageClick(e:any,key){
-    let currentPicture=ReactDom.findDOMNode(this).querySelector("img");
-      // console.log("currentPicture:",currentPicture.src);
-    let pictureWidth=currentPicture.naturalWidth;
-    // console.log("this",this);
-    // console.log("this.props.children[0].key",this.props.children[0].key);
-    // console.log("this.state.editorState",EditorState);
-    // console.log("key",key);
-    // console.log("pictureWidth：",pictureWidth);
+  _onImageClick(e: any, key) {
+    let currentPicture = ReactDom.findDOMNode(this).querySelector("img");
+    let pictureWidth = currentPicture.naturalWidth;
 
-    const editorState=EditorState.createEmpty();
+    const editorState = EditorState.createEmpty();
     const selection = editorState.getSelection();
-    // console.log("selection",selection);
     const blockTree = editorState.getBlockTree(this.props.children[0].key);
-    // console.log("blockTree",blockTree);
-    // this.setState({imageSrc:"https://image.qiluyidian.mobi/87928142151028397142qn1d609U291dGhFYXN0.jpg"});
-    if (pictureWidth==0) {
+    if (pictureWidth == 0) {
       message.error("图片地址错误！");
-    }else if(pictureWidth>650) {
-      message.error("图片尺寸过大将会导致用户流量浪费！请调整至最大650px。",10);
+    } else if (pictureWidth > 650) {
+      message.error(
+        "图片尺寸过大将会导致用户流量浪费！请调整至最大650px。",
+        10
+      );
     }
   }
 
-  _handleResize(event : Object, data : Object) {
-    const {width, height} = data.size;
-    this.setState({width, height});
-    Entity.mergeData(this.props.entityKey, {width, height});
+  _handleResize(event: Object, data: Object) {
+    const { width, height } = data.size;
+    this.setState({ width, height });
+    Entity.mergeData(this.props.entityKey, { width, height });
   }
 }
-//ImageSpan.propTypes={  children: React.PropTypes,  entityKey: string,  className?: string }
 
 ImageSpan.defaultProps = {
   children: null,
   entityKey: "",
   className: ""
-}
+};

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Icon} from "antd"
+import React, { Component } from "react";
+import { Icon } from "antd";
 
 class OpenFull extends Component {
   constructor(props) {
@@ -7,12 +7,12 @@ class OpenFull extends Component {
   }
   render() {
     return (
-      <div className="RichEditor-controls">
+      <div className="RichEditor-controls" style={{ marginLeft: "auto" }}>
         <span className="RichEditor-styleButton" onClick={this.props.onToggle}>
           {this.props.coverTitle}
         </span>
       </div>
-    )
+    );
   }
 }
 class AutoSave extends Component {
@@ -26,9 +26,9 @@ class AutoSave extends Component {
           {this.props.lang.autoSave}
         </span>
       </div>
-    )
+    );
   }
-};
+}
 class SourceEditor extends Component {
   constructor(props) {
     super(props);
@@ -40,9 +40,9 @@ class SourceEditor extends Component {
           {this.props.coverTitle}
         </span>
       </div>
-    )
+    );
   }
-};
+}
 module.exports = {
   OpenFull,
   AutoSave,
