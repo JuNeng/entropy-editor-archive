@@ -14,7 +14,7 @@
     "release":
       "webpack -p --progress --colors --config webpack.release.config.js",
     "publish":
-      "babel -d publish/ src/ --no-comments && lessc src/global/supports/resources/system.less publish/global/supports/resources/system.css"
+      "babel -d publish/ src/ --no-comments && lessc src/global/supports/resources/system.less publish/global/supports/resources/system.css && lessc src/editor/components.css publish/editor/components.css"
   },
   "lint-staged": {
     "*.{js,jsx,json,less,css,md}": ["prettier --write", "git add"]

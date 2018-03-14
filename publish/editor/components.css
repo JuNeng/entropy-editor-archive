@@ -8,82 +8,67 @@
   background-color: #f9f9f9;
   padding: 5px;
 }
-
 .editor_top {
   height: 30px;
   width: 100%;
 }
-
 .editor_middle {
   background-color: #fff;
   border: 1px solid #e9e9e9;
   box-shadow: 3px 3px 5px #aaa inset;
 }
-
 .editor_bottom {
   height: 30px;
   width: 100%;
 }
-
 .superFancyBlockquote {
   color: #999;
   font-style: italic;
   text-align: center;
 }
-
 .RichEditor-root {
   background: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #e9edef;
   font-size: 14px;
-  padding: 15px;
+  padding: 24px;
+  border-radius: 8px;
 }
-
 .RichEditor-editor {
-  border-top: 1px solid #ddd;
   cursor: text;
   font-size: 16px;
 }
-
 .public-DraftStyleDefault-ul {
   list-style: disc;
   padding-left: 2rem;
 }
-
 .public-DraftStyleDefault-ol {
   padding-left: 2rem;
   list-style-type: decimal;
   counter-reset: ol-counter;
 }
-
 .public-DraftStyleDefault-ol:before {
   content: counter(ol-counter);
   counter-increment: ol-counter;
 }
-
 .RichEditor-editor .public-DraftEditorPlaceholder-root,
 .RichEditor-editor .public-DraftEditor-content {
   margin: 0 -15px -15px;
   padding: 15px;
 }
-
 .RichEditor-editor .public-DraftEditor-content {
   min-height: 400px;
   line-height: initial;
 }
-
 .public-DraftEditor-content > div > * {
   margin: 10px 0;
 }
-
 .public-DraftEditor-content pre {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-
 .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
   display: none;
 }
-
 .RichEditor-editor .RichEditor-blockquote {
   border-left: 5px solid #eee;
   color: #666;
@@ -92,50 +77,41 @@
   margin: 16px 0;
   padding: 10px 20px;
 }
-
 .RichEditor-editor .RichEditor-alignment-left {
   text-align: left;
 }
-
 .RichEditor-editor .RichEditor-alignment-center {
   text-align: center;
 }
-
 .RichEditor-editor .RichEditor-alignment-right {
   text-align: right;
 }
-
 .RichEditor-editor .RichEditor-alignment-justify {
   text-align: justify;
 }
-
 .RichEditor-editor .public-DraftStyleDefault-pre {
   background-color: rgba(0, 0, 0, 0.05);
   font-family: "Inconsolata", "Menlo", "Consolas", monospace;
   font-size: 16px;
   padding: 20px;
 }
-
 .RichEditor-controls {
   font-family: "Helvetica", sans-serif;
   font-size: 14px;
   user-select: none;
 }
-
 .RichEditor-controls-container {
   display: flex;
+  flex-wrap: wrap;
 }
-
 .RichEditor-controls-split {
   padding-right: 20px;
 }
-
 .RichEditor-color span {
   margin: 0;
   width: 16px;
   line-height: 28px;
 }
-
 .RichEditor-styleButton {
   color: #7d7f8e;
   cursor: pointer;
@@ -149,7 +125,6 @@
 .RichEditor-styleButton.ant-btn.ant-btn-primary.ant-btn-icon-only {
   color: #fff;
 }
-
 .RichEditor-styleButton i.anticon {
   margin-left: 0px !important;
 }
@@ -157,7 +132,6 @@
   color: #fff;
   border-radius: 5px;
 }
-
 .RichEditor-color {
   display: inline-block;
   height: 16px;
@@ -167,10 +141,4 @@
   position: relative;
   border-radius: 3px;
   margin: 0px 5px;
-}
-
-.RichEditor-color-active {
-}
-
-.RichEditor-color:nth-child(2n + 1) {
 }
